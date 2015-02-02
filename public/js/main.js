@@ -3,7 +3,7 @@
 // http://code.tutsplus.com/tutorials/introduction-to-html5-desktop-apps-with-node-webkit--net-36296
 
 var fs = require('fs'),
-    file = require('file.js'),
+    file = require('./js/file.js'),
     pass = require('pass.js'),
     gui = require('nw.gui'),
     request = require('request'),
