@@ -1,14 +1,17 @@
 {
   "name": "Inordinate",
-  "main": "./index.html",
+  "main": "./public/index.html",
   "window": {
     "toolbar": true,
     "width": 800,
     "height": 600
   },
   "dependencies": {
-    "react": "~0.12.2",
-    "omniscient": "~2.1.0"
+    "immstruct": "^1.0.0",
+    "immutable": "^3.6.2",
+    "omniscient": "^2.0.0",
+    "react": "^0.12.0",
+    "request": "^2.51.0"
   }
 }
 
