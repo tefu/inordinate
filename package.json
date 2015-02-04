@@ -11,7 +11,8 @@
     "immutable": "^3.6.2",
     "omniscient": "^2.0.0",
     "react": "^0.12.0",
-    "request": "^2.51.0"
+    "request": "^2.51.0",
+    "js-csp": "^0.3.3"
   }
 }
 

@@ -1,18 +1,18 @@
 // Tutorial application for now.
 
-var fs = require('fs'),
-    file = require('./js/file.js'),
-    pass = require('pass.js'),
-    gui = require('nw.gui'),
-    request = require('request'),
+var
+    // fs = require('fs'),
+    // file = require('./js/file.js'),
+    // pass = require('pass.js'),
+    // gui = require('nw.gui'),
+    // request = require('request'),
     React     = require('react'),
     component = require('omniscient'),
     Immutable = require('immutable'),
-    immstruct = require('immstruct');
+    immstruct = require('immstruct'),
+    Feed = require('./js/feed.js');
 
 var d = React.DOM;
-
-var data = immstruct({ numbers: {} });
 
 var test_data = immstruct({
   posts: [
@@ -23,29 +23,9 @@ var test_data = immstruct({
   ]
 });
 
-var Post = component('Post', function (props) {
-  var post = props.cursor.toJS();
-  return d.div({className: 'container'},
-           d.div({className: 'row'},
-             d.div({className: 'one-half column'},
-               d.h2({}, post.title),
-               d.p({}, post.content))
-         ));
-});
-
-
-var Posts = component('Posts', function (props) {
-  var posts = props.cursor.toArray();
-  return d.ul({},
-              posts.map(function (post) {
-                return Post(post);
-              }));
-});
-
-
 function render () {
   React.render(
-    Posts(test_data.cursor('posts')),
+    Feed(test_data.cursor('posts')),
     // Buckets(data.cursor('numbers')),
     document.getElementById('app'));
 }
