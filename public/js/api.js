@@ -1,16 +1,24 @@
 var fs = require('fs'),
     file = require('./js/file.js'),
     pass = require('./js/pass.js'),
+    csp = require('js-csp'),
     request = require('request');
-var http = require('http');
 
+var ch = csp.go(function*(x) {
+  yield csp.timeout(5000);
 
-request('curl https://www.inoreader.com/accounts/ClientLogin -d Email=' + pass.username + ' -d Passwd=' + pass.password + ' --verbose', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(response);
-  }
+  x = request('curl https://www.inoreader.com/accounts/ClientLogin -d Email=' + pass.username + ' -d Passwd=' + pass.password + ' --verbose', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      return response;
+    }
+    else {
+      return "Oh no, it didn't work.";
+    }
+  });
+
+  return x;
 });
 
 
 
-module.exports = {};
+module.exports = ch;
