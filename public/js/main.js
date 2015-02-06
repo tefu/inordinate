@@ -1,12 +1,6 @@
 // Tutorial application for now.
 
-var
-    // fs = require('fs'),
-    // file = require('./js/file.js'),
-    // pass = require('pass.js'),
-    // gui = require('nw.gui'),
-    // request = require('request'),
-    React     = require('react'),
+var React     = require('react'),
     component = require('omniscient'),
     Immutable = require('immutable'),
     immstruct = require('immstruct'),
@@ -26,7 +20,6 @@ var test_data = immstruct({
 function render () {
   React.render(
     Feed(test_data.cursor('posts')),
-    // Buckets(data.cursor('numbers')),
     document.getElementById('app'));
 }
 
@@ -40,3 +33,4 @@ setInterval(function () {
     return post_list.push(Immutable.Map({ title: new_title, content: new_content }));
   });
 }, 1000);
+
