@@ -1,11 +1,6 @@
 {
   "name": "Inordinate",
-  "main": "./public/index.html",
-  "window": {
-    "toolbar": true,
-    "width": 800,
-    "height": 600
-  },
+  "main": "./public/main.js",
   "dependencies": {
     "immstruct": "^1.0.0",
     "immutable": "^3.6.2",
@@ -15,4 +10,3 @@
     "js-csp": "^0.3.3"
   }
 }
-

@@ -1,6 +1,6 @@
 var fs = require('fs'),
-    file = require('./js/file.js'),
-    pass = require('./js/pass.js'),
+    file = require('./file.js'),
+    pass = require('./pass.js'),
     csp = require('js-csp'),
     request = require('request');
 

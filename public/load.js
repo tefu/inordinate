@@ -4,7 +4,7 @@ var React     = require('react'),
     component = require('omniscient'),
     Immutable = require('immutable'),
     immstruct = require('immstruct'),
-    Feed = require('./js/feed.js');
+    Feed = require('./feed.js');
 
 var d = React.DOM;
 
