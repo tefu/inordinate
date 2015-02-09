@@ -1,0 +1,4 @@
+node_modules/
+.jshintrc
+public/node_modules
+public/pass.js
