@@ -1,24 +1,18 @@
-var fs = require('fs'),
-    file = require('./file.js'),
-    pass = require('./pass.js'),
-    csp = require('js-csp'),
-    request = require('request');
+var request = require('request'),
+    http = require('http'),
+    Future = require('data.future');
 
-var ch = csp.go(function*(x) {
-  yield csp.timeout(5000);
+exports = module.exports;
 
-  x = request('curl https://www.inoreader.com/accounts/ClientLogin -d Email=' + pass.username + ' -d Passwd=' + pass.password + ' --verbose', function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      return response;
-    }
-    else {
-      return "Oh no, it didn't work.";
-    }
+exports.auth = function (username, password) {
+  return new Future(function(reject, resolve) {
+    request.post('https://www.inoreader.com/accounts/ClientLogin',
+		 { form: { Email: username, Passwd: password } },
+    function (error, response, body) {
+      if (error)
+	reject(error);
+      else
+	resolve(body);
+    });
   });
-
-  return x;
-});
-
-
-
-module.exports = ch;
+};

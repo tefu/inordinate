@@ -1,36 +1,50 @@
-var app = require('app');  // Module to control application life.
-var BrowserWindow = require('browser-window');  // Module to create native browser window.
+// Tutorial application for now.
 
-// Report crashes to our server.
-require('crash-reporter').start();
+var React     = require('react'),
+    component = require('omniscient'),
+    Immutable = require('immutable'),
+    immstruct = require('immstruct'),
+    Feed = require('./feed.js'),
+    Login = require('./login.js'),
+    pass = require('./pass.js');
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the javascript object is GCed.
-var mainWindow = null;
-
-// Quit when all windows are closed.
-app.on('window-all-closed', function() {
-  if (process.platform != 'darwin')
-    app.quit();
+var test_data = immstruct({
+  posts: [
+  { title: "HELLO",
+    content: "Super cool microblog post." },
+  { title: "Hello....",
+    content: "Another super cool microblog post."}
+  ]
 });
 
-// This method will be called when atom-shell has done everything
-// initialization and ready for creating browser windows.
-app.on('ready', function() {
-  // Use ES6 for js-csp.
-  app.commandLine.appendSwitch('js-flags', '--harmony');
-  
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+function render () {
+  React.render(
+    Feed(test_data.cursor('posts')),
+    document.getElementById('app'));
+}
 
-  // and load the index.html of the app.
-  mainWindow.loadUrl('file://' + __dirname + '/index.html');
+render();
+test_data.on('swap', render);
 
-  // Emitted when the window is closed.
-  mainWindow.on('closed', function() {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null;
+setInterval(function () {
+  var new_title = "This is another.";
+  var new_content = "Please go away JS.";
+  test_data.cursor('posts').update(function (post_list) {
+    return post_list.push(Immutable.Map({ title: new_title, content: new_content }));
   });
-});
+}, 1000);
+
+
+
+var Api = require('./api.js');
+console.log("This is the API:");
+console.log(Api);
+
+var authID = Api.auth(pass.username, pass.password);
+
+console.log(authID);
+authID.fork(function (error) {
+  console.log("Didn't do shit: " + error);
+}, function (data) {
+     console.log("Worked: " + data);
+   });
