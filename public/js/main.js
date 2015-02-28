@@ -43,7 +43,15 @@ console.log(Api);
 user_info = Api.userInfo();
 
 user_info.fork(function (error) {
-  console.log("This isn't good... " + error);
+  console.log('This isn\'t good... ' + error);
+}, function (data) {
+  console.log(data);
+});
+
+sub_added = Api.addSubscription('feed/http://feeds.arstechnica.com/arstechnica/science');
+
+sub_added.fork(function (error) {
+  console.log('This isn\'t good... ' + error);
 }, function (data) {
   console.log(data);
 });

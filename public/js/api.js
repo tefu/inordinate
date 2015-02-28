@@ -27,11 +27,11 @@ module.exports = function(username, password) {
   
   auth_token = parseId(auth(username, password));
 
-  function userInfo () {
+  function apiRequest (directory, params) {
     return auth_token.chain(function (token) {
+      params.T = token;
       return new Future(function(reject, resolve) {
-        request.post(url + '/reader/api/0/user-info', 
-                     { form: { T: token}},
+        request.post(url + directory, { form: params},
           function (error, response, body) {
             if (error)
               reject(error);
@@ -43,9 +43,17 @@ module.exports = function(username, password) {
     });
   }
   
+  function userInfo() {
+    return apiRequest('/reader/api/0/user-info', {});
+  }
+  
+  function addSubscription (feedId) {
+    return apiRequest('/reader/api/0/subscription/quickadd', {quickadd: feedId});
+  }
   
   return {
-    userInfo: userInfo
+    userInfo: userInfo,
+    addSubscription: addSubscription
   };
 };
 
