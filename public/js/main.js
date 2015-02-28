@@ -36,15 +36,13 @@ setInterval(function () {
 
 
 
-var Api = require('./js/api.js');
-console.log("This is the API:");
-console.log(Api);
+var Api = require('./js/api.js')(pass.username, pass.password);
 
-var authID = Api.auth(pass.username, pass.password);
+var authID = Api;
 
 console.log(authID);
 authID.fork(function (error) {
   console.log("Didn't do shit: " + error);
 }, function (data) {
-     console.log("Worked: " + data);
-   });
+  console.log("Worked: " + data);
+});
