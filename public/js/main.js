@@ -4,9 +4,9 @@ var React     = require('react'),
     component = require('omniscient'),
     Immutable = require('immutable'),
     immstruct = require('immstruct'),
-    Feed = require('./feed.js'),
-    Login = require('./login.js'),
-    pass = require('./pass.js');
+    Feed = require('./js/feed.js'),
+    Login = require('./js/login.js'),
+    pass = require('./js/pass.js');
 
 var test_data = immstruct({
   posts: [
@@ -36,7 +36,7 @@ setInterval(function () {
 
 
 
-var Api = require('./api.js');
+var Api = require('./js/api.js');
 console.log("This is the API:");
 console.log(Api);
 

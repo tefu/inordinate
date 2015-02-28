@@ -1,6 +1,15 @@
 {
   "name": "Inordinate",
   "main": "./public/index.html",
+  "window": {
+    "title": "Inordinate",
+    "toolbar": true,
+    "frame": false,
+    "width": 800,
+    "height": 600,
+    "resizable": true,
+    "position": "center"
+  },
   "dependencies": {
     "immstruct": "^1.0.0",
     "immutable": "^3.6.2",
