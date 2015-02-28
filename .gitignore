@@ -3,4 +3,5 @@ node_modules/
 public/node_modules
 public/pass.js
 public/js/toybox.js
+public/js/pass.js
 public/css/main.css
