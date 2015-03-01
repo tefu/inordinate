@@ -40,18 +40,28 @@ var Api = require('./js/api.js')(pass.username, pass.password);
 
 console.log(Api);
 
+function test_api (content) {
+  content.fork(function (error) {
+    console.log('This isn\'t good... ' + error);
+  }, function (data) {
+    console.log(data);
+  });
+}
 user_info = Api.userInfo();
+test_api(user_info);
 
-user_info.fork(function (error) {
-  console.log('This isn\'t good... ' + error);
-}, function (data) {
-  console.log(data);
-});
+sub_added = Api.addSubscription('feed/https://lobste.rs');
+test_api(sub_added);
 
-sub_added = Api.addSubscription('feed/http://feeds.arstechnica.com/arstechnica/science');
 
-sub_added.fork(function (error) {
-  console.log('This isn\'t good... ' + error);
-}, function (data) {
-  console.log(data);
-});
+sub_edited = Api.renameSubscription('feed/http://feeds.arstechnica.com/arstechnica/science', 'Sniff.');
+test_api(sub_edited);
+
+unread = Api.unreadCount();
+test_api(unread);
+// info = 
+// {
+//   ac: 'edit',
+//   s: 'feed/http://feeds.arstechnica.com/arstechnica/science',
+//   a: '/src'
+// };

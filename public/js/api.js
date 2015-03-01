@@ -51,9 +51,24 @@ module.exports = function(username, password) {
     return apiRequest('/reader/api/0/subscription/quickadd', {quickadd: feedId});
   }
   
+  function editSubscription(params) {
+    return apiRequest('/reader/api/0/subscription/edit', params);
+  }
+  
+  function renameSubscription(feedId, title) {
+    return editSubscription({ ac: 'edit', s: feedId, t: title});
+  }
+  
+  function unreadCount () {
+    return apiRequest('/reader/api/0/unread-count', {});
+  }
+
   return {
     userInfo: userInfo,
-    addSubscription: addSubscription
+    addSubscription: addSubscription,
+    editSubscription: editSubscription,
+    renameSubscription: renameSubscription,
+    unreadCount: unreadCount
   };
 };
 
