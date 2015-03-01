@@ -50,15 +50,6 @@ function test_api (content) {
 user_info = Api.userInfo();
 test_api(user_info);
 
-sub_added = Api.addSubscription('feed/https://lobste.rs');
-test_api(sub_added);
-
-
-sub_edited = Api.renameSubscription('feed/http://feeds.arstechnica.com/arstechnica/science', 'Sniff.');
-test_api(sub_edited);
-
-unread = Api.unreadCount();
-test_api(unread);
 // info = 
 // {
 //   ac: 'edit',

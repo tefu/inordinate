@@ -11,10 +11,12 @@ module.exports = function(username, password) {
       request.post(url + '/accounts/ClientLogin',
                    { form: { Email: username, Passwd: password } },
       function (error, response, body) {
-        if (error)
+        if (error) {
           reject(error);
-        else
+        }
+        else {
           resolve(body);
+        }
       });
     });
   }
@@ -39,6 +41,8 @@ module.exports = function(username, password) {
               resolve(body);
             }
         });
+      }).map(function (body) {
+        return JSON.parse(body);
       });
     });
   }
