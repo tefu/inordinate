@@ -28,6 +28,8 @@ module.exports = function(username, password) {
   }
   
   auth_token = parseId(auth(username, password));
+  
+  
 
   function apiRequest (directory, params) {
     return auth_token.chain(function (token) {
@@ -41,9 +43,7 @@ module.exports = function(username, password) {
               resolve(body);
             }
         });
-      }).map(function (body) {
-        return JSON.parse(body);
-      });
+      }).map(JSON.parse);
     });
   }
   
