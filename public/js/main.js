@@ -38,21 +38,8 @@ setInterval(function () {
 
 var Api = require('./js/api.js')(pass.username, pass.password);
 
-console.log(Api);
+// console.log(Api);
 
-function test_api (content) {
-  content.fork(function (error) {
-    console.log('This isn\'t good... ' + error);
-  }, function (data) {
-    console.log(data);
-  });
-}
-user_info = Api.userInfo();
-test_api(user_info);
-
-// info = 
-// {
-//   ac: 'edit',
-//   s: 'feed/http://feeds.arstechnica.com/arstechnica/science',
-//   a: '/src'
-// };
+// user_info = Api.userInfo();
+// console.log(user_info.inspect());
+// user_info.then(console.log, console.log);

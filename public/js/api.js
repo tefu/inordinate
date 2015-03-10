@@ -1,70 +1,86 @@
 var request = require('request'),
-    http = require('http'),
-    Future = require('data.future');
+  http = require('http'),
+  Q = require('q');
 
 module.exports = function(username, password) {
   var url = 'https://www.inoreader.com',
-      auth_token = '';
+    auth_token = null;
 
-  function auth (username, password) {
-    return new Future(function(reject, resolve) {
-      request.post(url + '/accounts/ClientLogin',
-                   { form: { Email: username, Passwd: password } },
-      function (error, response, body) {
-        if (error) {
-          reject(error);
+  function auth(username, password) {
+    var defer = Q.defer();
+    request.post(url + '/accounts/ClientLogin', {
+        form: {
+          Email: username,
+          Passwd: password
         }
-        else {
-          resolve(body);
+      },
+      function(error, response, body) {
+        if (error) {
+          defer.reject(error);
+        } else {
+          defer.resolve(body);
         }
       });
-    });
-  }
-  
-  function parseId (auth) {
-    return auth.map(function(a) {
-      return a.split('=')[3].replace(/(\r\n|\n|\r)/gm,"");
-    });
-  }
-  
-  auth_token = parseId(auth(username, password));
-  
-  
 
-  function apiRequest (directory, params) {
-    return auth_token.chain(function (token) {
+    return defer.promise;
+  }
+
+  function parseId(auth) {
+    return auth.split('=')[3].replace(/(\r\n|\n|\r)/gm, "");
+  }
+
+  auth_token = auth(username, password).then(parseId);
+
+  function apiRequest(directory, params) {
+    return auth_token.then(function(token) {
+      var defer = Q.defer();
       params.T = token;
-      return new Future(function(reject, resolve) {
-        request.post(url + directory, { form: params},
-          function (error, response, body) {
-            if (error)
-              reject(error);
-            else {
-              resolve(body);
-            }
+      request.post(url + directory, {
+          form: params
+        },
+        function(error, response, body) {
+          if (error)
+            defer.reject(error);
+          else {
+            defer.resolve(body);
+          }
         });
-      }).map(JSON.parse);
+      return defer.promise;
     });
   }
   
+  function JSONRequest (directory, params) {
+    return apiRequest(directory, params).then(JSON.parse);
+  }
+
   function userInfo() {
-    return apiRequest('/reader/api/0/user-info', {});
+    return JSONRequest('/reader/api/0/user-info', {});
   }
-  
-  function addSubscription (feedId) {
-    return apiRequest('/reader/api/0/subscription/quickadd', {quickadd: feedId});
+
+  function addSubscription(feedId) {
+    return JSONRequest('/reader/api/0/subscription/quickadd', {
+      quickadd: feedId
+    });
   }
-  
+
   function editSubscription(params) {
     return apiRequest('/reader/api/0/subscription/edit', params);
   }
-  
+
   function renameSubscription(feedId, title) {
-    return editSubscription({ ac: 'edit', s: feedId, t: title});
+    return editSubscription({
+      ac: 'edit',
+      s: feedId,
+      t: title
+    });
   }
-  
-  function unreadCount () {
-    return apiRequest('/reader/api/0/unread-count', {});
+
+  function unreadCount() {
+    return JSONRequest('/reader/api/0/unread-count', {});
+  }
+
+  function token() {
+    return auth_token;
   }
 
   return {
@@ -72,7 +88,7 @@ module.exports = function(username, password) {
     addSubscription: addSubscription,
     editSubscription: editSubscription,
     renameSubscription: renameSubscription,
-    unreadCount: unreadCount
+    unreadCount: unreadCount,
+    token: token
   };
 };
-
