@@ -1,40 +1,46 @@
-var should = require('should'),
-  assert = require('assert'),
+var assert = require('assert'),
   pass = require('../public/js/pass.js'),
   Api = require('../public/js/api.js')(pass.username, pass.password);
 
-console.log('Running tests.');
+describe('Api', function () {
+  var sub = 'https://lobste.rs';
+  describe('userInfo()', function () {
+    it('Should return correct username.', function (done) {
+      Api.userInfo().then(function (data) {
+        if (data.userName === pass.username)
+          done();
+        else
+          throw new Error('Account name is not correct.');
+      }, function (error) {
+        throw error;
+      });
+    });
+  });
 
-function mayday(error) {
-  console.log('Error! You did something bad!');
-  console.log(error);
-}
+  describe('addSubscription()', function () {
+    it('Should return a JSON object with the subscription query.', function (done) {
+      Api.addSubscription('feed/' + sub).then(function (data) {
+        if (data.query === sub)
+          done();
+        else
+          throw new Error('Sent query is not the same as returned query.');
+      }, function (error) {
+        throw error;
+      });
+    });
+  });
 
-info = Api.userInfo();
-info.then(function(data) {
-  should.equal(data.userName, "dummyaccount");
-}, mayday);
+  describe('renameSubscription()', function () {
+    it('Should return \'OK\'', function (done) {
+      Api.renameSubscription('feed/' + sub + '/rss').then(function (data) {
+        if (data === 'OK')
+          done();
+        else
+          throw new Error('Could not rename subscription.');
+      }, function (error) {
+        throw error;
+      });
+    });
+  });
 
-
-sub_added = Api.addSubscription('feed/https://lobste.rs');
-sub_added.then(function(data) {
-  should.equal(data.query, 'https://lobste.rs');
-}, mayday);
-
-
-sub_edited = Api.renameSubscription('feed/https://lobste.rs/rss', 'ebi');
-
-sub_edited.then(function(data) {
-  should.equal(data, 'OK');
-}, mayday);
-
-Api.unreadCount().then(function(data) {
-  should.equal(data.max, 1000);
-}, mayday);
-
-Api.token().then(function (t1) {
-  Api.token().then(function (t2) {
-    should.equal(t1, t2);
-  }, mayday);
-}, mayday);
-
+});
