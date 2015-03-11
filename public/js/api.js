@@ -1,5 +1,6 @@
 var request = require('request'),
   http = require('http'),
+  urlencode = require('urlencode'),
   Q = require('q');
 
 module.exports = function (username, password) {
@@ -92,6 +93,10 @@ module.exports = function (username, password) {
     return JSONRequest('/tag/list', {});
   }
 
+  function streamContents(streamId) {
+    return JSONRequest('/stream/contents/' + urlencode(streamId), {});
+  }
+
   return {
     userInfo: userInfo,
     addSubscription: addSubscription,
@@ -100,6 +105,7 @@ module.exports = function (username, password) {
     unreadCount: unreadCount,
     token: token,
     subscriptionList: subscriptionList,
-    foldersAndTags: foldersAndTags
+    foldersAndTags: foldersAndTags,
+    streamContents: streamContents
   };
 };

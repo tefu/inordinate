@@ -96,4 +96,20 @@ describe('Api', function () {
       });
     });
   });
+
+  describe('streamContents()', function () {
+    it('Should return a list of posts.', function (done) {
+      Api.subscriptionList().then(function (data) {
+        return data.subscriptions[0].id;
+      }).then(Api.streamContents).then(function (data) {
+        if (data.items)
+          done();
+        else
+          throw new Error('No items in the stream...');
+      }, function (error) {
+        throw error;
+      });
+    });
+  });
+
 });
