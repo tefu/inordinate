@@ -2,8 +2,9 @@ var request = require('request'),
   http = require('http'),
   Q = require('q');
 
-module.exports = function(username, password) {
+module.exports = function (username, password) {
   var url = 'https://www.inoreader.com',
+    api_dir = '/reader/api/0',
     auth_token = null;
 
   function auth(username, password) {
@@ -14,7 +15,7 @@ module.exports = function(username, password) {
           Passwd: password
         }
       },
-      function(error, response, body) {
+      function (error, response, body) {
         if (error) {
           defer.reject(error);
         } else {
@@ -32,13 +33,13 @@ module.exports = function(username, password) {
   auth_token = auth(username, password).then(parseId);
 
   function apiRequest(directory, params) {
-    return auth_token.then(function(token) {
+    return auth_token.then(function (token) {
       var defer = Q.defer();
       params.T = token;
-      request.post(url + directory, {
+      request.post(url + api_dir + directory, {
           form: params
         },
-        function(error, response, body) {
+        function (error, response, body) {
           if (error)
             defer.reject(error);
           else {
@@ -48,23 +49,23 @@ module.exports = function(username, password) {
       return defer.promise;
     });
   }
-  
-  function JSONRequest (directory, params) {
+
+  function JSONRequest(directory, params) {
     return apiRequest(directory, params).then(JSON.parse);
   }
 
   function userInfo() {
-    return JSONRequest('/reader/api/0/user-info', {});
+    return JSONRequest('/user-info', {});
   }
 
   function addSubscription(feedId) {
-    return JSONRequest('/reader/api/0/subscription/quickadd', {
+    return JSONRequest('/subscription/quickadd', {
       quickadd: feedId
     });
   }
 
   function editSubscription(params) {
-    return apiRequest('/reader/api/0/subscription/edit', params);
+    return apiRequest('/subscription/edit', params);
   }
 
   function renameSubscription(feedId, title) {
@@ -76,11 +77,19 @@ module.exports = function(username, password) {
   }
 
   function unreadCount() {
-    return JSONRequest('/reader/api/0/unread-count', {});
+    return JSONRequest('/unread-count', {});
   }
 
   function token() {
     return auth_token;
+  }
+
+  function subscriptionList() {
+    return JSONRequest('/subscription/list', {});
+  }
+
+  function foldersAndTags() {
+    return JSONRequest('/tag/list', {});
   }
 
   return {
@@ -89,6 +98,8 @@ module.exports = function(username, password) {
     editSubscription: editSubscription,
     renameSubscription: renameSubscription,
     unreadCount: unreadCount,
-    token: token
+    token: token,
+    subscriptionList: subscriptionList,
+    foldersAndTags: foldersAndTags
   };
 };

@@ -45,7 +45,7 @@ describe('Api', function () {
   });
 
   describe('unreadCount()', function () {
-    it('should have a max count of 1000.', function (done) {
+    it('Should have a max count of 1000.', function (done) {
       Api.unreadCount().then(function (data) {
         if (parseInt(data.max) === 1000) {
           done();
@@ -59,9 +59,9 @@ describe('Api', function () {
   });
 
   describe('token()', function () {
-    it('should return a string', function (done) {
+    it('Should return a string.', function (done) {
       Api.token().then(function (data) {
-        if(data.length > 0)
+        if (data.length > 0)
           done();
         else
           throw new Error('Token has length 0.');
@@ -71,4 +71,29 @@ describe('Api', function () {
     });
   });
 
+  describe('subscriptionList()', function () {
+    it('Should return a JSON object of subscriptions.', function (done) {
+      Api.subscriptionList().then(function (data) {
+        if (data.subscriptions)
+          done();
+        else
+          throw new Error('No subscriptions :(');
+      }, function (error) {
+        throw error;
+      });
+    });
+  });
+
+  describe('foldersAndTags()', function () {
+    it('Should return a list of tags.', function (done) {
+      Api.foldersAndTags().then(function (data) {
+        if (data.tags)
+          done();
+        else
+          throw new Error('No folders or tags :(');
+      }, function (error) {
+        throw error;
+      });
+    });
+  });
 });
