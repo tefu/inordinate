@@ -1,45 +1,32 @@
-// Tutorial application for now.
-
-var React     = require('react'),
-    component = require('omniscient'),
-    Immutable = require('immutable'),
-    immstruct = require('immstruct'),
-    Feed = require('./js/feed.js'),
-    Login = require('./js/login.js'),
-    pass = require('./js/pass.js');
+var React = require('react'),
+  component = require('omniscient'),
+  Immutable = require('immutable'),
+  immstruct = require('immstruct'),
+  Feed = require('./js/feed.js'),
+  Login = require('./js/login.js'),
+  pass = require('./js/pass.js');
 
 var test_data = immstruct({
-  posts: [
-  { title: "HELLO",
-    content: "Super cool microblog post." },
-  { title: "Hello....",
-    content: "Another super cool microblog post."}
-  ]
+  items: [{
+    title: "Hello....",
+    author: "Super cool microblog post loading..."
+  }]
 });
 
-function render () {
+function render() {
   React.render(
-    Feed(test_data.cursor('posts')),
+    Feed(test_data.cursor()),
     document.getElementById('app'));
 }
 
 render();
 test_data.on('swap', render);
 
-setInterval(function () {
-  var new_title = "This is another.";
-  var new_content = "Please go away JS.";
-  test_data.cursor('posts').update(function (post_list) {
-    return post_list.push(Immutable.Map({ title: new_title, content: new_content }));
-  });
-}, 1000);
-
-
-
 var Api = require('./js/api.js')(pass.username, pass.password);
-
-// console.log(Api);
-
-// user_info = Api.userInfo();
-// console.log(user_info.inspect());
-// user_info.then(console.log, console.log);
+Api.subscriptionList().then(function (obj) {
+  return obj.subscriptions[0].id;
+}).then(Api.streamContents).then(function (obj) {
+  test_data.cursor().update(function (d) {
+    return Immutable.Map(obj);
+  });
+});
