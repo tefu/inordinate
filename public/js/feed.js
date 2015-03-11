@@ -11,11 +11,12 @@ var Item = component('Item', function (item) {
     d.div({
         className: 'row'
       },
-      d.div({
-          className: 'one-half column'
-        },
         d.h2({}, item.title),
-        d.p({}, item.author))
+        d.p({
+          dangerouslySetInnerHTML: {
+            __html: item.summary.content
+          }
+        })
     ));
 });
 

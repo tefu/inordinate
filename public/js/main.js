@@ -9,7 +9,11 @@ var React = require('react'),
 var test_data = immstruct({
   items: [{
     title: "Hello....",
-    author: "Super cool microblog post loading..."
+    summary: {
+      direction: "ltr",
+      content: "This here is a fine article."
+    },
+    author: "I'm an author!!!!"
   }]
 });
 
@@ -24,7 +28,7 @@ test_data.on('swap', render);
 
 var Api = require('./js/api.js')(pass.username, pass.password);
 Api.subscriptionList().then(function (obj) {
-  return obj.subscriptions[0].id;
+  return obj.subscriptions[1].id;
 }).then(Api.streamContents).then(function (obj) {
   test_data.cursor().update(function (d) {
     return Immutable.Map(obj);
