@@ -4,6 +4,7 @@ var assert = require('assert'),
 
 describe('Api', function () {
   var sub = 'https://lobste.rs';
+
   describe('userInfo()', function () {
     it('Should return correct username.', function (done) {
       Api.userInfo().then(function (data) {
@@ -37,6 +38,33 @@ describe('Api', function () {
           done();
         else
           throw new Error('Could not rename subscription.');
+      }, function (error) {
+        throw error;
+      });
+    });
+  });
+
+  describe('unreadCount()', function () {
+    it('should have a max count of 1000.', function (done) {
+      Api.unreadCount().then(function (data) {
+        if (parseInt(data.max) === 1000) {
+          done();
+        } else {
+          throw new Error('Max count isn\'t 1000.');
+        }
+      }, function (error) {
+        throw error;
+      });
+    });
+  });
+
+  describe('token()', function () {
+    it('should return a string', function (done) {
+      Api.token().then(function (data) {
+        if(data.length > 0)
+          done();
+        else
+          throw new Error('Token has length 0.');
       }, function (error) {
         throw error;
       });
