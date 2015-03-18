@@ -9,6 +9,9 @@ var React = require('react'),
 var test_data = immstruct({
   items: [{
     title: "Hello....",
+    canonical: [{
+      href: "https://www.google.com"
+    }],
     summary: {
       direction: "ltr",
       content: "This here is a fine article."

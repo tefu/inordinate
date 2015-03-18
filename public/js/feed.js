@@ -5,18 +5,21 @@ var React = require('react'),
 var d = React.DOM;
 
 var Item = component('Item', function (item) {
+  console.log(item);
   return d.div({
       className: 'container'
     },
     d.div({
         className: 'row'
       },
-        d.h2({}, item.title),
-        d.p({
-          dangerouslySetInnerHTML: {
-            __html: item.summary.content
-          }
-        })
+      d.h2({}, d.a({
+        href: item.canonical[0].href
+      }, item.title)),
+      d.p({
+        dangerouslySetInnerHTML: {
+          __html: item.summary.content
+        }
+      })
     ));
 });
 
