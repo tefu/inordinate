@@ -7,6 +7,8 @@ var React = require('react'),
   Login = require('./js/login.js'),
   pass = require('./js/pass.js');
 
+var d = React.DOM;
+
 var test_data = immstruct({
   items: [{
     title: "Hello....",
@@ -43,20 +45,24 @@ var sub_list = immstruct({
   }]
 });
 
-function render(root, cursor) {
+var MainApp = component('MainApp', function (props) {
+  return d.div({}, Sidebar(props.subs), Feed(props.stream));
+});
+
+function render() {
   React.render(
-    root(cursor),
+    MainApp({subs: sub_list.cursor(), stream: test_data.cursor()}),
     document.getElementById('app'));
 }
 
-render(Sidebar, sub_list.cursor());
+render();
 test_data.on('swap', render);
 
 var Api = require('./js/api.js')(pass.username, pass.password);
 Api.subscriptionList().then(function (obj) {
   return obj.subscriptions[1].id;
 }).then(Api.streamContents).then(function (obj) {
-  test_data.cursor().update(function (d) {
-    return Immutable.Map(obj);
+  test_data.cursor().update('items', function (d) {
+    return obj.items;
   });
 });
