@@ -41,16 +41,37 @@ var state = immstruct({
     url: 'http://kukuruku.co/rss/index/',
     htmlUrl: 'http://kukuruku.co/',
     iconUrl: 'https://www.inoreader.com/cache/favicons/k/u/k/kukuruku_co_16x16.png'
-  }]
+  }],
+  showSidebar: false
 });
 
 var MainApp = component('MainApp', function (props) {
-  console.log(props.current);
   var data = props.current.toJS();
-  return d.div({},
-    Sidebar({
-      subscriptions: data.subscriptions
-    }), Feed(data.stream));
+  var toggleSidebar = function () {
+    state.cursor('showSidebar').update(function (flag) {
+      return !flag;
+    });
+  }
+  return d.div({
+      id: 'main-app',
+      className: (data.showSidebar) ? 'show-nav' : ''
+    }, d.div({
+      id: 'canvas'
+    }, d.div({
+        id: 'sidebar-menu'
+      }, d.h2({}, 'Subscriptions'),
+      Sidebar({
+        subscriptions: data.subscriptions
+      })), d.div({
+        id: 'stream'
+      },
+      d.a({
+        href: '#',
+        className: 'toggle-nav',
+        onClick: toggleSidebar
+      }, 'Toggle me!'), Feed(data.stream)))
+
+  );
 });
 
 function render() {
