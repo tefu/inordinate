@@ -12,7 +12,7 @@ var Subscription = component('Subscription', function (sub) {
 });
 
 var Sidebar = component('Sidebar', function (props) {
-  var subscriptions = props.cursor.deref().toJS().subscriptions;
+  var subscriptions = props.subscriptions.toArray();
   return d.ul({},
     subscriptions.map(function (subscription) {
       return Subscription(subscription);

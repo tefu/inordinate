@@ -24,7 +24,7 @@ var Item = component('Item', function (item) {
 });
 
 var Stream = component('Stream', function (props) {
-  var items = props.cursor.deref().toJS().items;
+  var items = props.items.toJS();
   return d.ul({},
     items.map(function (item) {
       return Item(item);

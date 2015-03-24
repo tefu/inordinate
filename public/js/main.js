@@ -9,21 +9,20 @@ var React = require('react'),
 
 var d = React.DOM;
 
-var test_data = immstruct({
-  items: [{
-    title: "Hello....",
-    canonical: [{
-      href: "https://www.google.com"
-    }],
-    summary: {
-      direction: "ltr",
-      content: "This here is a fine article."
-    },
-    author: "I'm an author!!!!"
-  }]
-});
-
-var sub_list = immstruct({
+var state = immstruct({
+  stream: {
+    items: [{
+      title: "Hello....",
+      canonical: [{
+        href: "https://www.google.com"
+      }],
+      summary: {
+        direction: "ltr",
+        content: "This here is a fine article."
+      },
+      author: "I'm an author!!!!"
+    }]
+  },
   subscriptions: [{
     id: 'feed/https://lobste.rs/rss',
     title: 'ebi',
@@ -46,23 +45,29 @@ var sub_list = immstruct({
 });
 
 var MainApp = component('MainApp', function (props) {
-  return d.div({}, Sidebar(props.subs), Feed(props.stream));
+  var data = props.cursor.deref().toObject();
+  return d.div({},
+    Sidebar({
+      subscriptions: data.subscriptions
+    }), Feed({
+      items: data.stream.get('items')
+    }));
 });
 
 function render() {
   React.render(
-    MainApp({subs: sub_list.cursor(), stream: test_data.cursor()}),
+    MainApp(state.cursor()),
     document.getElementById('app'));
 }
 
 render();
-test_data.on('swap', render);
+state.on('swap', render);
 
 var Api = require('./js/api.js')(pass.username, pass.password);
 Api.subscriptionList().then(function (obj) {
   return obj.subscriptions[1].id;
 }).then(Api.streamContents).then(function (obj) {
-  test_data.cursor().update('items', function (d) {
+  state.cursor('stream').update('items', function (d) {
     return obj.items;
   });
 });
