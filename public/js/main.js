@@ -50,9 +50,7 @@ var MainApp = component('MainApp', function (props) {
   return d.div({},
     Sidebar({
       subscriptions: data.subscriptions
-    }), Feed({
-      items: data.stream.items
-    }));
+    }), Feed(data.stream));
 });
 
 function render() {
