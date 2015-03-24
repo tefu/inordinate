@@ -45,18 +45,19 @@ var state = immstruct({
 });
 
 var MainApp = component('MainApp', function (props) {
-  var data = props.cursor.deref().toObject();
+  console.log(props.current);
+  var data = props.current.toJS();
   return d.div({},
     Sidebar({
       subscriptions: data.subscriptions
     }), Feed({
-      items: data.stream.get('items')
+      items: data.stream.items
     }));
 });
 
 function render() {
   React.render(
-    MainApp(state.cursor()),
+    MainApp(state),
     document.getElementById('app'));
 }
 
