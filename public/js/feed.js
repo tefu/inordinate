@@ -5,7 +5,6 @@ var React = require('react'),
 var d = React.DOM;
 
 var Item = component('Item', function (item) {
-  console.log(item);
   return d.div({
       className: 'container'
     },

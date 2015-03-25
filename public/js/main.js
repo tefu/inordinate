@@ -1,13 +1,7 @@
 var React = require('react'),
   component = require('omniscient'),
   Immutable = require('immutable'),
-  immstruct = require('immstruct'),
-  Feed = require('./js/feed.js'),
-  Sidebar = require('./js/sidebar.js'),
-  Login = require('./js/login.js'),
-  pass = require('./js/pass.js');
-
-var d = React.DOM;
+  immstruct = require('immstruct');
 
 var state = immstruct({
   stream: {
@@ -44,6 +38,18 @@ var state = immstruct({
   }],
   showSidebar: false
 });
+
+global.state = state;
+
+var Feed = require('./js/feed.js'),
+  Sidebar = require('./js/sidebar.js'),
+  Login = require('./js/login.js'),
+  pass = require('./js/pass.js');
+
+var Api = require('./js/api.js')(pass.username, pass.password);
+global.Api = Api;
+
+var d = React.DOM;
 
 var MainApp = component('MainApp', function (props) {
   var data = props.current.toJS();
@@ -83,7 +89,6 @@ function render() {
 render();
 state.on('swap', render);
 
-var Api = require('./js/api.js')(pass.username, pass.password);
 Api.subscriptionList().then(function (obj) {
   return obj.subscriptions[1].id;
 }).then(Api.streamContents).then(function (obj) {

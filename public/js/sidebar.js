@@ -5,9 +5,17 @@ var React = require('react'),
 var d = React.DOM;
 
 var Subscription = component('Subscription', function (sub) {
+  var switchFeed = function () {
+    Api.streamContents(sub.id).then(function (obj) {
+      state.cursor('stream').update('items', function (d) {
+	return obj.items;
+      });
+    });
+  };
   return d.div({},
     d.a({
-      href: sub.url
+      href: sub.url,
+      onClick: switchFeed
     }, sub.title));
 });
 
