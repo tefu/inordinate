@@ -13,10 +13,10 @@ var Subscription = component('Subscription', function (sub) {
     });
   };
   return d.div({},
-    d.a({
-      href: sub.url,
+    d.div({
       onClick: switchFeed
-    }, sub.title));
+    }, d.img({src: sub.iconUrl}),
+	  sub.title));
 });
 
 var Sidebar = component('Sidebar', function (props) {

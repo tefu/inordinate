@@ -26,15 +26,6 @@ var state = immstruct({
     url: 'https://lobste.rs/rss',
     htmlUrl: 'https://lobste.rs/',
     iconUrl: 'https://www.inoreader.com/cache/favicons/l/o/b/lobste_rs_16x16.png'
-  }, {
-    id: 'feed/http://kukuruku.co/rss/index/',
-    title: 'Kukuruku / Technology Hub',
-    categories: [],
-    sortid: '014FE960',
-    firstitemmsec: 1424052380360057,
-    url: 'http://kukuruku.co/rss/index/',
-    htmlUrl: 'http://kukuruku.co/',
-    iconUrl: 'https://www.inoreader.com/cache/favicons/k/u/k/kukuruku_co_16x16.png'
   }],
   showSidebar: false
 });
@@ -90,7 +81,10 @@ render();
 state.on('swap', render);
 
 Api.subscriptionList().then(function (obj) {
-  return obj.subscriptions[1].id;
+  state.cursor('subscriptions').update(function () {
+    return obj.subscriptions;
+  });
+  return obj.subscriptions[0].id;
 }).then(Api.streamContents).then(function (obj) {
   state.cursor('stream').update('items', function (d) {
     return obj.items;
