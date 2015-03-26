@@ -23,7 +23,6 @@
   -webkit-transition: .3s ease all;
   transition: .3s ease all;
   padding: 5% 0;
-  /* Temp: Just spacing. */
 }
 
 #sidebar-menu {
@@ -32,15 +31,33 @@
   position: absolute;
   top: 0;
   left: -300px;
-  background: #D46A6A;
+  background: #277554;
   padding: 15px;
 }
 
 #main-app.show-nav #canvas {
--webkit-transform: translateX(300px);
-transform: translateX(300px);
+  -webkit-transform: translateX(300px);
+  transform: translateX(300px);
 }
 
 .toggle-nav {
-  position: fixed;
+  position: absolute;
+  top: 0px;
+  left: 6px;
+  color: #D5EAE1;
+}
+
+/* - Scrollbar ------------------------------------------------------------- */
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: #65A3CC;
+}
+
+::-webkit-scrollbar-corner {
+  background: #000;
 }

@@ -8,15 +8,17 @@ var Subscription = component('Subscription', function (sub) {
   var switchFeed = function () {
     Api.streamContents(sub.id).then(function (obj) {
       state.cursor('stream').update('items', function (d) {
-	return obj.items;
+        return obj.items;
       });
     });
   };
   return d.div({},
     d.div({
-      onClick: switchFeed
-    }, d.img({src: sub.iconUrl}),
-	  sub.title));
+        onClick: switchFeed
+      }, d.img({
+        src: sub.iconUrl
+      }),
+      sub.title));
 });
 
 var Sidebar = component('Sidebar', function (props) {

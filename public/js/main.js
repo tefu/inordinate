@@ -57,16 +57,18 @@ var MainApp = component('MainApp', function (props) {
     }, d.div({
         id: 'sidebar-menu'
       }, d.h2({}, 'Subscriptions'),
+
       Sidebar({
         subscriptions: data.subscriptions
-      })), d.div({
-        id: 'stream'
-      },
+      })), 
       d.a({
         href: '#',
         className: 'toggle-nav',
         onClick: toggleSidebar
-      }, 'Toggle me!'), Feed(data.stream)))
+      }, d.i({
+	id: 'toggle-icon',
+        className: 'fa fa-bars fa-lg'
+      })), Feed(data.stream))
 
   );
 });
