@@ -6,7 +6,7 @@ var React = require('react'),
 var state = immstruct({
   stream: {
     items: [{
-      title: "Hello....",
+      title: "Hello Lorem ipsum Hello Hello Hello",
       canonical: [{
         href: "https://www.google.com"
       }],
@@ -48,17 +48,18 @@ var MainApp = component('MainApp', function (props) {
     state.cursor('showSidebar').update(function (flag) {
       return !flag;
     });
-  }
+  };
+
   return d.div({id: 'main-app', className: (data.showSidebar) ? 'show-nav' : ''},
-	       d.div({id: 'canvas'},
+	       d.div({id: 'app-wrap'},
 		     d.div({id: 'sidebar-menu'},
-			   d.h2({}, 'Subscriptions'),
-			   Sidebar({subscriptions: data.subscriptions})),
+			    d.h2({}, 'Subscriptions'),
+			    Sidebar({subscriptions: data.subscriptions})),
 		     d.a({href: '#',
 			  className: 'toggle-nav',
 			  onClick: toggleSidebar},
 			 d.i({id: 'toggle-icon', className: 'fa fa-bars fa-lg'})),
-		     Feed(data.stream)));
+		     d.div({id: 'feed'},Feed(data.stream))));
 });
 
 function render() {
