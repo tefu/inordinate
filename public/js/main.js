@@ -50,16 +50,15 @@ var MainApp = component('MainApp', function (props) {
     });
   };
 
-  return d.div({id: 'main-app', className: (data.showSidebar) ? 'show-nav' : ''},
-	       d.div({id: 'app-wrap'},
-		     d.div({id: 'sidebar-menu'},
+  return d.div({className: 'app-wrap ' + ((data.showSidebar) ? 'show-nav' : '')},
+	       d.div({id: 'sidebar-menu'},
 			    d.h2({}, 'Subscriptions'),
 			    Sidebar({subscriptions: data.subscriptions})),
-		     d.a({href: '#',
+	       d.a({href: '#',
 			  className: 'toggle-nav',
 			  onClick: toggleSidebar},
 			 d.i({id: 'toggle-icon', className: 'fa fa-bars fa-lg'})),
-		     d.div({id: 'feed'},Feed(data.stream))));
+	       d.div({id: 'feed'},Feed(data.stream)));
 });
 
 function render() {

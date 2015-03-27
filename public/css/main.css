@@ -1,40 +1,45 @@
-#main-app {
-  overflow: visible;
+#app {
+  overflow: hidden;
   width: 100%;
   height: 5000px;
-  position: relative;
-}
-
-#app-wrap {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  -webkit-transform: translateX(0);
-  -webkit-transition: .3s ease all;
-  padding: 5% 0;
 }
 
 #sidebar-menu {
-  width: 300px;
+  -webkit-transition: all .1s ease-in-out;
+  width: 275px;
+  left: -275px;
   height: 100%;
   position: fixed;
   top: 0;
-  left: -300px;
   background: #BEAAAF;
+  text-align: center;
 }
 
-#main-app.show-nav #app-wrap {
-  margin-left: 300px;
+#feed {
+  -webkit-transition: all .1s ease-in-out;
+  padding: 1% 0;
 }
-#main-app.show-nav #feed {
-  margin-right: 300px;
+
+.app-wrap.show-nav #sidebar-menu,
+.app-wrap.show-nav #feed,
+.app-wrap.show-nav .toggle-nav {
+  margin-left: 275px;
 }
 
 .toggle-nav {
   position: fixed;
-  top: 0px;
-  left: 6px;
-  color: #D5EAE1;
+  top: 15px;
+  left: 0;
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  color: #ffffff;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.25);
+  -webkit-transition: all .1s ease-in-out;
 }
 
 /* - Scrollbar ------------------------------------------------------------- */
