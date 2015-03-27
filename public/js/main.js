@@ -12,7 +12,7 @@ var state = immstruct({
       }],
       summary: {
         direction: "ltr",
-        content: "This here is a fine article."
+        content: '<p><div>WHOA</div>This here is a fine article.</p>'
       },
       author: "I'm an author!!!!"
     }]
@@ -58,7 +58,7 @@ var MainApp = component('MainApp', function (props) {
 			  className: 'toggle-nav',
 			  onClick: toggleSidebar},
 			 d.i({id: 'toggle-icon', className: 'fa fa-bars fa-lg'})),
-	       d.div({id: 'feed'},Feed(data.stream)));
+	       d.div({id: 'feed'}, Feed(data.stream)));
 });
 
 function render() {
@@ -74,7 +74,7 @@ Api.subscriptionList().then(function (obj) {
   state.cursor('subscriptions').update(function () {
     return obj.subscriptions;
   });
-  return obj.subscriptions[0].id;
+  return obj.subscriptions[1].id;
 }).then(Api.streamContents).then(function (obj) {
   state.cursor('stream').update('items', function (d) {
     return obj.items;

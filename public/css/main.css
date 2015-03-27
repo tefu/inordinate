@@ -1,3 +1,20 @@
+body {
+  background-color: #EDE8E9;
+}
+a {
+  color: #4A434B;
+}
+
+a:hover {
+  color: #675F68;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+
+
 #app {
   overflow: hidden;
   width: 100%;
