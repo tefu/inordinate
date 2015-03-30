@@ -32,12 +32,12 @@ var state = immstruct({
 
 global.state = state;
 
-var Feed = require('./js/feed.js'),
-  Sidebar = require('./js/sidebar.js'),
-  Login = require('./js/login.js'),
-  pass = require('./js/pass.js');
+var Feed = require('./feed'),
+  Sidebar = require('./sidebar'),
+  Login = require('./login'),
+  pass = require('./pass');
 
-var Api = require('./js/api.js')(pass.username, pass.password);
+var Api = require('./api')(pass.username, pass.password);
 global.Api = Api;
 
 var d = React.DOM;
