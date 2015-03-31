@@ -1,9 +1,13 @@
-var Mousetrap = require('mousetrap');
+module.exports = function () {
+  var Mousetrap = require('mousetrap');
 
-window.onload = function() {
-  require('./js/main.js');
+  if (process.env.NW_DEV_INORDINATE == 1) {
+    Mousetrap.bind("ctrl+shift+i", function () {
+      window.require('nw.gui').Window.get().showDevTools();
+    });
+
+    Mousetrap.bind("ctrl+r", function () {
+      window.require('nw.gui').Window.open('index.html');
+    });
+  }
 };
-
-Mousetrap.bind("ctrl+shift+i", function() {
-  require('nw.gui').Window.get().showDevTools();
-});

@@ -1,6 +1,7 @@
 {
   "name": "Inordinate",
   "main": "./public/index.html",
+  "node-main": "./public/js/init.js",
   "window": {
     "title": "Inordinate",
     "toolbar": false,

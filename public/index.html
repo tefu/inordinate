@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Inordinate</title>
@@ -12,16 +13,17 @@
   <link href="./css/main.css" rel="stylesheet">
   <link rel="icon" type="image/png" href="img/favicon.png">
 </head>
-<body>
+
+<body onload="process.mainModule.exports()">
   <div id="app">
   </div>
 
   <script type="text/javascript">
-    // Needed when requiring HTML libs in Node Webkit.
     global.document = window.document;
     global.navigator = window.navigator;
   </script>
   <script src='node_modules/node-webkit-external-linker.js/node-webkit-external-linker.js'></script>
-  <script src="./js/init.js"></script>
+  <script src="./js/main.js"></script>
 </body>
+
 </html>
