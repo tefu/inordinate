@@ -1,37 +1,6 @@
-var React = require('react'),
-  component = require('omniscient'),
-  immstruct = require('immstruct');
+var React = require('react');
 
-var state = immstruct({
-  stream: {
-    items: [{
-      title: "Hello Lorem ipsum Hello Hello Hello",
-      canonical: [{
-        href: "https://www.google.com"
-      }],
-      summary: {
-        direction: "ltr",
-        content: '<p><div>WHOA</div>This here is a fine article.</p>'
-      },
-      author: "I'm an author!!!!"
-    }]
-  },
-  subscriptions: [{
-    id: 'feed/https://lobste.rs/rss',
-    title: 'ebi',
-    categories: [],
-    sortid: '014C4B14',
-    firstitemmsec: 1425041239589549,
-    url: 'https://lobste.rs/rss',
-    htmlUrl: 'https://lobste.rs/',
-    iconUrl: 'https://www.inoreader.com/cache/favicons/l/o/b/lobste_rs_16x16.png'
-  }],
-  showSidebar: false
-});
-
-global.state = state;
-
-var Feed = require('./feed'),
+var Stream = require('./feed'),
   Sidebar = require('./sidebar'),
   Login = require('./login'),
   pass = require('./pass');
@@ -41,41 +10,65 @@ global.Api = Api;
 
 var d = React.DOM;
 
-var MainApp = component('MainApp', function (props) {
-  var data = props.current.toJS();
-  var toggleSidebar = function () {
-    state.cursor('showSidebar').update(function (flag) {
-      return !flag;
-    });
-  };
+var MainApp = React.createClass({
 
-  return d.div({className: 'app-wrap ' + ((data.showSidebar) ? 'show-nav' : '')},
-  	       d.div({id: 'sidebar-menu'},
-  			    d.h2({}, 'Subscriptions'),
-  			    Sidebar({subscriptions: data.subscriptions})),
-  	       d.a({href: '#',
-  			  className: 'toggle-nav',
-  			  onClick: toggleSidebar},
-  			 d.i({id: 'toggle-icon', className: 'fa fa-bars fa-lg'})),
-  	       d.div({id: 'feed'}, Feed(data.stream)));
+  getInitialState: function () {
+    return {
+      stream: {
+        items: [{
+          title: "Hello Lorem ipsum Hello Hello Hello",
+          canonical: [{
+            href: "https://www.google.com"
+          }],
+          summary: {
+            direction: "ltr",
+            content: '<p><div>WHOA</div>This here is a fine article.</p>'
+          },
+          author: "I'm an author!!!!"
+        }]
+      },
+      subscriptions: [{
+        id: 'feed/https://lobste.rs/rss',
+        title: 'ebi',
+        categories: [],
+        sortid: '014C4B14',
+        firstitemmsec: 1425041239589549,
+        url: 'https://lobste.rs/rss',
+        htmlUrl: 'https://lobste.rs/',
+        iconUrl: 'https://www.inoreader.com/cache/favicons/l/o/b/lobste_rs_16x16.png'
+      }],
+      showSidebar: false
+    };
+  },
+
+  toggleSidebar: function () {
+    this.setState({showSidebar: !(this.state.showSidebar)});
+  },
+  
+  render: function () {
+    return d.div({className: 'app-wrap ' + ((this.state.showSidebar) ? 'show-nav' : '')},
+		 d.div({id: 'sidebar-menu'},
+			      d.h2({}, 'Subscriptions'),
+		       new Sidebar({subscriptions: this.state.subscriptions})),
+		 d.a({href: '#',
+			    className: 'toggle-nav',
+			    onClick: this.toggleSidebar},
+			   d.i({id: 'toggle-icon', className: 'fa fa-bars fa-lg'})),
+		 d.div({id: 'feed'}, new Stream(this.state.stream)));
+  }
 });
 
 function render() {
   React.render(
-    MainApp(state),
+    new MainApp(),
     document.getElementById('app'));
 }
 
 render();
-state.on('swap', render);
 
-Api.subscriptionList().then(function (obj) {
-  state.cursor('subscriptions').update(function () {
-    return obj.subscriptions;
-  });
-  return obj.subscriptions[1].id;
-}).then(Api.streamContents).then(function (obj) {
-  state.cursor('stream').update('items', function (d) {
-    return obj.items;
-  });
-});
+// Api.subscriptionList().then(function (obj) {
+//   state.subscriptions = obj.subscriptions;
+//   return obj.subscriptions[1].id;
+// }).then(Api.streamContents).then(function (obj) {
+//   state.stream.items = obj.items;
+// });

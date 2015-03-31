@@ -1,11 +1,10 @@
-var React = require('react'),
-  component = require('omniscient'),
-  immstruct = require('immstruct');
+var React = require('react');
 
 var d = React.DOM;
 
-var Item = component('Item', function (item) {
-  var addCSS = function (html) {
+var Item = React.createClass({
+
+  addCSS: function (html) {
     var wrapper = document.createElement('div');
     wrapper.innerHTML = html;
 
@@ -24,22 +23,25 @@ var Item = component('Item', function (item) {
     }
 
     return wrapper.innerHTML;
-  };
+  },
 
-  return d.div({className: 'container'},
-	       d.div({className: 'row'},
-		     d.h2({},
-			  d.a({href: item.canonical[0].href}, item.title)),
-		     d.div({dangerouslySetInnerHTML:
-			  {__html: addCSS(item.summary.content)}})));
+  render: function () {
+    return d.div({className: 'container'},
+		 d.div({className: 'row'},
+		       d.h2({},
+			    d.a({href: this.props.canonical[0].href}, this.props.title)),
+		       d.div({dangerouslySetInnerHTML:
+			      {__html: this.addCSS(this.props.summary.content)}})));
+  }
 });
 
-var Stream = component('Stream', function (props) {
-  var items = props.items;
-  return d.ul({},
-    items.map(function (item) {
-      return Item(item);
-    }));
+var Stream = React.createClass({
+  render: function () {
+    return d.ul({},
+      this.props.items.map(function (item) {
+	return new Item(item);
+      }));
+  }
 });
 
 module.exports = Stream;

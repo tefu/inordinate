@@ -1,32 +1,29 @@
-var React = require('react'),
-  component = require('omniscient'),
-  immstruct = require('immstruct');
+var React = require('react');
 
 var d = React.DOM;
 
-var Subscription = component('Subscription', function (sub) {
-  var switchFeed = function () {
-    Api.streamContents(sub.id).then(function (obj) {
-      state.cursor('stream').update('items', function (d) {
-        return obj.items;
-      });
-    });
-  };
-  return d.div({},
-    d.div({
-        onClick: switchFeed
-      }, d.img({
-        src: sub.iconUrl
-      }),
-      sub.title));
+var Subscription = React.createClass({
+  switchFeed: function () {
+  },
+
+  render: function () {
+    return d.div({},
+	    d.div({
+	      onClick: this.switchFeed
+	      }, d.img({
+		src: this.props.sub.iconUrl
+	      }),
+	      this.props.sub.title));
+  }
 });
 
-var Sidebar = component('Sidebar', function (props) {
-  var subscriptions = props.subscriptions;
-  return d.ul({},
-    subscriptions.map(function (subscription) {
-      return Subscription(subscription);
-    }));
+var Sidebar = React.createClass({
+  render: function () {
+    return d.ul({},
+      this.props.subscriptions.map(function (subscription) {
+	return new Subscription({sub: subscription});
+      }));
+  }
 });
 
 module.exports = Sidebar;
