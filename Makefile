@@ -1,5 +1,5 @@
 APP = ./
-SRC = $(wildcard src/js/*.js src/css/*.css)
+SRC = $(wildcard public/js/*.js public/css/*.css)
 TESTS = $(wildcard test/*.js)
 
 run: package.json
@@ -8,6 +8,9 @@ ifeq ($(shell uname), Linux)
 else
 	open -n -a node-webkit $(APP)
 endif
+
+build: node_modules $(SRC)
+	node tools/build.js
 
 node_modules: package.json
 	npm install
