@@ -1,11 +1,12 @@
 {
   "name": "Inordinate",
+  "version": "1.0.0",
   "main": "./public/index.html",
   "node-main": "./public/js/init.js",
   "window": {
     "title": "Inordinate",
     "toolbar": false,
-    "frame": false,
+    "frame": true,
     "width": 800,
     "height": 600,
     "resizable": true,
@@ -17,6 +18,8 @@
     "q": "^1.2.0",
     "urlencode": "^0.2.0",
     "node-webkit-external-linker.js": "^1.0.2",
-    "mousetrap": "1.5.2"
+    "node-webkit-builder": "1.0.11",
+    "mousetrap": "1.5.2",
+    "react-tools": "0.13.1"
   }
 }

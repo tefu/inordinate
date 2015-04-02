@@ -1,5 +1,7 @@
 node_modules/
 .jshintrc
 public/node_modules
-public/js/toybox.js
-public/js/pass.js
+src/jsx/pass.jsx
+src/jsx/toybox.jsx
+cache/
+target/
