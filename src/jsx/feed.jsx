@@ -1,9 +1,7 @@
 var React = require('react');
 
-var d = React.DOM;
-
-var Item = React.createClass({
-
+var Stream = React.createClass({
+  
   addCSS: function (html) {
     var wrapper = document.createElement('div');
     wrapper.innerHTML = html;
@@ -26,21 +24,20 @@ var Item = React.createClass({
   },
 
   render: function () {
-    return d.div({className: 'container'},
-		 d.div({className: 'row'},
-		       d.h2({},
-			    d.a({href: this.props.canonical[0].href}, this.props.title)),
-		       d.div({dangerouslySetInnerHTML:
-			      {__html: this.addCSS(this.props.summary.content)}})));
-  }
-});
-
-var Stream = React.createClass({
-  render: function () {
-    return d.ul({},
-      this.props.items.map(function (item) {
-	return new Item(item);
-      }));
+    var self = this;
+    return (
+      <ul>
+        {self.props.items.map(function (item) {
+          return (<div className='container'>
+                <div className='row'>
+                  <h2>
+                    <a href={item.canonical[0].href}>{item.title}</a>
+                  </h2>
+                  <div dangerouslySetInnerHTML={{__html: self.addCSS(item.summary.content)}}></div>
+                </div>
+              </div>);
+        })}
+      </ul>);
   }
 });
 

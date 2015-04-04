@@ -8,8 +8,6 @@ var Stream = require('./feed'),
 var Api = require('./api')(pass.username, pass.password);
 global.Api = Api;
 
-var d = React.DOM;
-
 var MainApp = React.createClass({
 
   getInitialState: function () {
@@ -46,15 +44,19 @@ var MainApp = React.createClass({
   },
   
   render: function () {
-    return d.div({className: 'app-wrap ' + ((this.state.showSidebar) ? 'show-nav' : '')},
-		 d.div({id: 'sidebar-menu'},
-			      d.h2({}, 'Subscriptions'),
-		       new Sidebar({subscriptions: this.state.subscriptions})),
-		 d.a({href: '#',
-			    className: 'toggle-nav',
-			    onClick: this.toggleSidebar},
-			   d.i({id: 'toggle-icon', className: 'fa fa-bars fa-lg'})),
-		 d.div({id: 'feed'}, new Stream(this.state.stream)));
+    return (
+    <div className={ 'app-wrap ' + ((this.state.showSidebar) ? 'show-nav' : '')}>
+      <div id='sidebar-menu'>
+        <h2>Subscriptions</h2>
+        <Sidebar subscriptions={this.state.subscriptions} />
+      </div>
+      <a href='#' className='toggle-nav' onClick={this.toggleSidebar}>
+        <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
+      </a>
+      <div id='feed'>
+        {new Stream(this.state.stream)}
+      </div>
+    </div>)
   }
 });
 
@@ -65,10 +67,3 @@ function render() {
 }
 
 render();
-
-// Api.subscriptionList().then(function (obj) {
-//   state.subscriptions = obj.subscriptions;
-//   return obj.subscriptions[1].id;
-// }).then(Api.streamContents).then(function (obj) {
-//   state.stream.items = obj.items;
-// });

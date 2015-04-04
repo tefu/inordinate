@@ -1,30 +1,22 @@
 var React = require('react');
 
-var d = React.DOM;
-
-var Sidebar = React.createClass(function () {
-  function handleClick (i) {
+var Sidebar = React.createClass({
+  handleClick: function (i) {
     this.props.switchFeed(this.props.subscriptions[i]);
-  }
-
-  function render () {
-    var self = this;
-    return d.ul({},
-      self.props.subscriptions.map(function (sub, i) {
-	return d.div({},
-	  d.div({
-	      onClick: handleClick.bind(self, i)
-	    }, d.img({
-	      src: sub.iconUrl
-	    }),
-	    sub.title));
-      }));
-  }
+  },
   
-  return {
-    handleClick: handleClick,
-    render: render
-  };
-}());
+  render: function () {
+    var self = this;
+    return (
+    <ul>
+      {self.props.subscriptions.map(function (sub, i) {
+        return (
+        <div onClick={self.handleClick.bind(self, i)}>
+          <img src={sub.iconUrl}>{sub.title}</img>
+        </div>)
+       })}
+    </ul>);
+  }
+});
 
 module.exports = Sidebar;
