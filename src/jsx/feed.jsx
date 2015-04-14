@@ -35,10 +35,12 @@ var Stream = React.createClass({
         {self.props.items.map(function (item) {
           return (<div className='container'>
                     <div className='row'>
-                      <h1 className='page-header'>
-                        <a href={item.canonical[0].href}>{item.title}</a>
-                      </h1>
-                      <div dangerouslySetInnerHTML={{__html: self.addCSS(item.summary.content)}}></div>
+                      <div className='col-md-9'>
+                        <h2 className='page-header'>
+                          <a href={item.canonical[0].href}>{item.title}</a>
+                        </h2>
+                        <div dangerouslySetInnerHTML={{__html: self.addCSS(item.summary.content)}}></div>
+                      </div>
                     </div>
                   </div>);
         })}
