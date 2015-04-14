@@ -12,19 +12,7 @@ var MainApp = React.createClass({
 
   getInitialState: function () {
     return {
-      stream: {
-        items: [{
-          title: "Hello Lorem ipsum Hello Hello Hello",
-          canonical: [{
-            href: "https://www.google.com"
-          }],
-          summary: {
-            direction: "ltr",
-            content: '<p><div>WHOA</div>This here is a fine article.</p>'
-          },
-          author: "I'm an author!!!!"
-        }]
-      },
+      stream: require('./test_data'),
       subscriptions: [{
         id: 'feed/https://lobste.rs/rss',
         title: 'ebi',
@@ -62,9 +50,9 @@ var MainApp = React.createClass({
         htmlUrl: 'https://lobste.rs/',
         iconUrl: 'https://www.inoreader.com/cache/favicons/l/o/b/lobste_rs_16x16.png'
       }]});
-    setTimeout(function () {
-      self.switchFeed('feed/https://lobste.rs/rss');
-    }, 1000);
+    // setTimeout(function () {
+    //   self.switchFeed('feed/https://lobste.rs/rss');
+    // }, 1000);
     // Api.subscriptionList().then(function (data) {
     //   console.log(self.state.subscriptions)
     // });

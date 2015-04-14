@@ -6,11 +6,16 @@ var Stream = React.createClass({
     var wrapper = document.createElement('div');
     wrapper.innerHTML = html;
 
-    var images = wrapper.querySelectorAll('img');
-    for(var i = 0; i < images.length; i++)
-    {
-      images[i].className = 'img-responsive';
+    var addClass = function (query, name) {
+      var elements = wrapper.querySelectorAll(query);
+      
+      for(var i = 0; i < elements.length; i++) {
+        elements[i].className = name;
+      }
     }
+
+    addClass('img','img-responsive');
+    addClass('iframe','embed-responsive-item');
 
     var ads = wrapper.querySelectorAll('center');
 
@@ -29,13 +34,13 @@ var Stream = React.createClass({
       <ul>
         {self.props.items.map(function (item) {
           return (<div className='container'>
-                <div className='row'>
-                  <h2>
-                    <a href={item.canonical[0].href}>{item.title}</a>
-                  </h2>
-                  <div dangerouslySetInnerHTML={{__html: self.addCSS(item.summary.content)}}></div>
-                </div>
-              </div>);
+                    <div className='row'>
+                      <h1 className='page-header'>
+                        <a href={item.canonical[0].href}>{item.title}</a>
+                      </h1>
+                      <div dangerouslySetInnerHTML={{__html: self.addCSS(item.summary.content)}}></div>
+                    </div>
+                  </div>);
         })}
       </ul>);
   }

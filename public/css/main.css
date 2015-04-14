@@ -1,5 +1,5 @@
 body {
-  background-color: #EDE8E9;
+  background-color: #F8F7F7;
 }
 a {
   color: #4A434B;
@@ -28,13 +28,13 @@ h2 {
   height: 100%;
   position: fixed;
   top: 0;
-  background: #BEAAAF;
+  background: #E3D8DB;
   text-align: center;
 }
 
 #feed {
   -webkit-transition: all .1s ease-in-out;
-  padding: 1% 0;
+  padding: 3px 15px 0 3px;
 }
 
 .app-wrap.show-nav #sidebar-menu,
