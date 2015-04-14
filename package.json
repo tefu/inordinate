@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "./public/index.html",
   "node-main": "./public/js/init.js",
+  "webkit": {
+    "plugin": true
+  },
   "window": {
     "title": "Inordinate",
     "toolbar": false,
