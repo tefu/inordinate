@@ -1,20 +1,22 @@
 APP = ./
 JSX = ./node_modules/.bin/jsx
-SRC = $(wildcard src/js/*.js src/css/*.css)
+JSX_SRC = $(wildcard src/jsx/*.jsx)
+JS_OUT = $(patsubst src/jsx/%.jsx, public/js/%.js, $(JSX_SRC))
 TESTS = $(wildcard test/*.js)
 
-run:
+run: all
 ifeq ($(shell uname), Linux)
 	`which nw` $(APP)
 else
 	open -n -a node-webkit $(APP)
 endif
 
-build: node_modules $(SRC)
-	mkdir -p public/js
-	$(foreach jsx, $(shell find ./src/jsx -name '*.jsx'), $(JSX) $(jsx) > $(patsubst ./src/jsx/%.jsx, ./public/js/%.js, $(jsx));)
+all: node_modules $(JS_OUT)
 
-target: build
+public/js/%.js: src/jsx/%.jsx
+	$(JSX) $< > $@
+
+target: all
 	rm -rf target
 	mkdir -p target
 	cp package.json target
@@ -28,7 +30,9 @@ clean:
 
 node_modules: package.json
 	npm install
+	@touch node_modules
+
 test: $(TESTS)
 	mocha --timeout 12000 test/*
 
-.PHONY: target test
+.PHONY: target test all

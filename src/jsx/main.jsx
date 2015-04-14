@@ -43,12 +43,40 @@ var MainApp = React.createClass({
     this.setState({showSidebar: !(this.state.showSidebar)});
   },
   
+  switchFeed: function (id) {
+    var self = this;
+    Api.streamContents(id).then(function (obj) {
+      self.setState({stream: obj});
+    });
+  },
+  
+  componentDidMount: function () {
+    var self = this;
+    this.setState({subscriptions: [{
+        id: 'feed/https://lobste.rs/rss',
+        title: 'NOTebi',
+        categories: [],
+        sortid: '014C4B14',
+        firstitemmsec: 1425041239589549,
+        url: 'https://lobste.rs/rss',
+        htmlUrl: 'https://lobste.rs/',
+        iconUrl: 'https://www.inoreader.com/cache/favicons/l/o/b/lobste_rs_16x16.png'
+      }]});
+    setTimeout(function () {
+      self.switchFeed('feed/https://lobste.rs/rss');
+    }, 1000);
+    // Api.subscriptionList().then(function (data) {
+    //   console.log(self.state.subscriptions)
+    // });
+  },
+  
   render: function () {
     return (
     <div className={ 'app-wrap ' + ((this.state.showSidebar) ? 'show-nav' : '')}>
       <div id='sidebar-menu'>
         <h2>Subscriptions</h2>
-        <Sidebar subscriptions={this.state.subscriptions} />
+        <Sidebar subscriptions={this.state.subscriptions}
+                 switchFeed={this.switchFeed} />
       </div>
       <a href='#' className='toggle-nav' onClick={this.toggleSidebar}>
         <i id='toggle-icon' className='fa fa-bars fa-lg'></i>

@@ -9,7 +9,7 @@ var Stream = React.createClass({
     var images = wrapper.querySelectorAll('img');
     for(var i = 0; i < images.length; i++)
     {
-      images[i].className = 'u-max-full-width';
+      images[i].className = 'img-responsive';
     }
 
     var ads = wrapper.querySelectorAll('center');
