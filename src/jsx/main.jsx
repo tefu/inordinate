@@ -1,5 +1,6 @@
 var React = require('react');
 
+
 var Stream = require('./feed'),
   Sidebar = require('./sidebar'),
   Login = require('./login'),
@@ -60,17 +61,23 @@ var MainApp = React.createClass({
   
   render: function () {
     return (
-    <div className={ 'app-wrap ' + ((this.state.showSidebar) ? 'show-nav' : '')}>
-      <div id='sidebar-menu'>
-        <h2>Subscriptions</h2>
-        <Sidebar subscriptions={this.state.subscriptions}
-                 switchFeed={this.switchFeed} />
+    <div>
+      <div id='app-menu'>
+        <i id='app-close' className="fa fa-lg fa-close"
+      onClick={function () {window.require('nw.gui').App.closeAllWindows();}}></i>
       </div>
-      <a href='#' className='toggle-nav' onClick={this.toggleSidebar}>
-        <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
-      </a>
-      <div id='feed'>
-        {new Stream(this.state.stream)}
+      <div className={ 'app-wrap ' + ((this.state.showSidebar) ? 'show-nav' : '')}>
+        <div id='sidebar-menu'>
+          <h2>Subscriptions</h2>
+          <Sidebar subscriptions={this.state.subscriptions}
+                  switchFeed={this.switchFeed} />
+        </div>
+        <a href='#' className='toggle-nav' onClick={this.toggleSidebar}>
+          <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
+        </a>
+        <div id='feed'>
+          {new Stream(this.state.stream)}
+        </div>
       </div>
     </div>)
   }
