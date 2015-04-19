@@ -9,7 +9,7 @@
   "window": {
     "title": "Inordinate",
     "toolbar": false,
-    "frame": false,
+    "frame": true,
     "width": 800,
     "height": 600,
     "resizable": true,

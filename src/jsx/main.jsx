@@ -1,6 +1,5 @@
 var React = require('react');
 
-
 var Stream = require('./feed'),
   Sidebar = require('./sidebar'),
   Login = require('./login'),
@@ -41,7 +40,9 @@ var MainApp = React.createClass({
   
   componentDidMount: function () {
     var self = this;
-    this.setState({subscriptions: [{
+
+    self.setState({
+      subscriptions: [{
         id: 'feed/https://lobste.rs/rss',
         title: 'NOTebi',
         categories: [],
@@ -50,33 +51,31 @@ var MainApp = React.createClass({
         url: 'https://lobste.rs/rss',
         htmlUrl: 'https://lobste.rs/',
         iconUrl: 'https://www.inoreader.com/cache/favicons/l/o/b/lobste_rs_16x16.png'
-      }]});
-    // setTimeout(function () {
-    //   self.switchFeed('feed/https://lobste.rs/rss');
-    // }, 1000);
-    // Api.subscriptionList().then(function (data) {
-    //   console.log(self.state.subscriptions)
-    // });
-  },
-  
+      }]
+    });
+
+    Api.subscriptionList().then(function (data) {
+      self.setState({subscriptions: data.subscriptions});
+    });
+  },  
+
   render: function () {
+    var self = this;
     return (
     <div>
       <div id='app-menu'>
-        <i id='app-close' className="fa fa-lg fa-close"
-      onClick={function () {window.require('nw.gui').App.closeAllWindows();}}></i>
       </div>
-      <div className={ 'app-wrap ' + ((this.state.showSidebar) ? 'show-nav' : '')}>
+      <div className={ 'app-wrap ' + ((self.state.showSidebar) ? 'show-nav' : '')}>
         <div id='sidebar-menu'>
           <h2>Subscriptions</h2>
-          <Sidebar subscriptions={this.state.subscriptions}
-                  switchFeed={this.switchFeed} />
+          <Sidebar subscriptions={self.state.subscriptions}
+                  switchFeed={self.switchFeed} />
         </div>
-        <a href='#' className='toggle-nav' onClick={this.toggleSidebar}>
+        <a href='#' className='toggle-nav' onClick={self.toggleSidebar}>
           <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
         </a>
         <div id='feed'>
-          {new Stream(this.state.stream)}
+          {new Stream(self.state.stream)}
         </div>
       </div>
     </div>)
