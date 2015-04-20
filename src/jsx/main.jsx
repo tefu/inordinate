@@ -5,8 +5,9 @@ var Stream = require('./feed'),
   Login = require('./login'),
   pass = require('./pass');
 
-var Api = require('./api')(pass.username, pass.password);
+var Api = null;
 global.Api = Api;
+
 
 var MainApp = React.createClass({
 
@@ -37,9 +38,15 @@ var MainApp = React.createClass({
       self.setState({stream: obj});
     });
   },
+
+  login: function (username, password) {
+    Api = require('./api')(username, password);
+  },
   
   componentDidMount: function () {
     var self = this;
+
+    self.login(pass.username, pass.password);
 
     self.setState({
       subscriptions: [{
@@ -75,16 +82,18 @@ var MainApp = React.createClass({
           <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
         </a>
         <div id='feed'>
-          {new Stream(self.state.stream)}
+          <Stream items={self.state.stream.items} />
         </div>
       </div>
     </div>)
   }
 });
 
+var factory = React.createFactory(MainApp);
+
 function render() {
   React.render(
-    new MainApp(),
+    <MainApp/>,
     document.getElementById('app'));
 }
 

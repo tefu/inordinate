@@ -34,12 +34,17 @@ h2 {
   color: rgba(0, 0, 0, 0.7);
 }
 
-.subscription {
-  background-color: rgba(242, 239, 240, 0.8);
+
+#feed {
+  -webkit-transition: all .1s ease-in-out;
+  padding: 3px 15px 0 3px;
 }
 
-.subscription:hover {
-  background-color: rgba(242, 239, 240, 0.5);
+ /* Sidebar --------------------------------------------------------- */
+.app-wrap.show-nav #sidebar-menu,
+.app-wrap.show-nav #feed,
+.app-wrap.show-nav .toggle-nav {
+  margin-left: 275px;
 }
 
 #sidebar-menu {
@@ -51,17 +56,6 @@ h2 {
   top: 0;
   background: #E3D8DB;
   text-align: center;
-}
-
-#feed {
-  -webkit-transition: all .1s ease-in-out;
-  padding: 3px 15px 0 3px;
-}
-
-.app-wrap.show-nav #sidebar-menu,
-.app-wrap.show-nav #feed,
-.app-wrap.show-nav .toggle-nav {
-  margin-left: 275px;
 }
 
 .toggle-nav {
@@ -80,7 +74,16 @@ h2 {
   -webkit-transition: all .1s ease-in-out;
 }
 
-/* - Scrollbar ------------------------------------------------------------- */
+.subscription {
+  background-color: rgba(242, 239, 240, 0.8);
+}
+
+.subscription:hover {
+  background-color: rgba(242, 239, 240, 0.5);
+}
+
+
+ /* Scrollbar ------------------------------------------------------- */
 ::-webkit-scrollbar {
   height: 5px;
   width: 5px;

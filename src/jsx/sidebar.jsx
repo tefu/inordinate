@@ -12,7 +12,8 @@ var Sidebar = React.createClass({
       {self.props.subscriptions.map(function (sub, i) {
         return (
         <li className='list-group-item subscription'
-         onClick={function () {self.handleClick(sub);}}>
+            key={sub.id}
+            onClick={function () {self.handleClick(sub);}}>
           <img src={sub.iconUrl}>{'        ' + sub.title}</img>
         </li>)
        })}
