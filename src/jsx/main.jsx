@@ -1,6 +1,7 @@
 var React = require('react');
 
 var Stream = require('./feed'),
+    Gallery = require('./gallery'),
   Sidebar = require('./sidebar'),
   Login = require('./login'),
   pass = require('./pass');
@@ -24,14 +25,15 @@ var MainApp = React.createClass({
         htmlUrl: 'https://lobste.rs/',
         iconUrl: 'https://www.inoreader.com/cache/favicons/l/o/b/lobste_rs_16x16.png'
       }],
-      showSidebar: false
+      showSidebar: false,
+      View: Stream
     };
   },
 
   toggleSidebar: function () {
     this.setState({showSidebar: !(this.state.showSidebar)});
   },
-  
+
   switchFeed: function (id) {
     var self = this;
     Api.streamContents(id).then(function (obj) {
@@ -42,35 +44,29 @@ var MainApp = React.createClass({
   login: function (username, password) {
     Api = require('./api')(username, password);
   },
-  
+
+  toggleView: function () {
+      this.setState({View: (this.state.View === Stream) ? Gallery : Stream});
+  },
+
   componentDidMount: function () {
     var self = this;
 
     self.login(pass.username, pass.password);
 
-    self.setState({
-      subscriptions: [{
-        id: 'feed/https://lobste.rs/rss',
-        title: 'NOTebi',
-        categories: [],
-        sortid: '014C4B14',
-        firstitemmsec: 1425041239589549,
-        url: 'https://lobste.rs/rss',
-        htmlUrl: 'https://lobste.rs/',
-        iconUrl: 'https://www.inoreader.com/cache/favicons/l/o/b/lobste_rs_16x16.png'
-      }]
-    });
-
     Api.subscriptionList().then(function (data) {
       self.setState({subscriptions: data.subscriptions});
     });
-  },  
+  },
 
   render: function () {
     var self = this;
     return (
     <div>
       <div id='app-menu'>
+        <i className={"fa fa-lg " + ((self.state.View === Stream) ?
+                                    "fa-toggle-off" : "fa-toggle-on")}
+           onClick={self.toggleView}></i>
       </div>
       <div className={ 'app-wrap ' + ((self.state.showSidebar) ? 'show-nav' : '')}>
         <div id='sidebar-menu'>
@@ -82,14 +78,12 @@ var MainApp = React.createClass({
           <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
         </a>
         <div id='feed'>
-          <Stream items={self.state.stream.items} />
+          <this.state.View stream={self.state.stream} />
         </div>
       </div>
-    </div>)
+    </div>);
   }
 });
-
-var factory = React.createFactory(MainApp);
 
 function render() {
   React.render(
