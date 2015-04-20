@@ -1,4 +1,5 @@
-var React = require('react');
+var React = require('react'),
+    query = require('./domquery');
 
 var Stream = React.createClass({
 
@@ -10,37 +11,11 @@ var Stream = React.createClass({
     return this.state.activeId == postId;
   },
 
-  addCSS: function (html) {
-    var wrapper = document.createElement('div');
-    wrapper.innerHTML = html;
-
-    var addClass = function (query, name) {
-      var elements = wrapper.querySelectorAll(query);
-
-      for(var i = 0; i < elements.length; i++) {
-        elements[i].className = name;
-      }
-    }
-
-    addClass('img','img-responsive');
-    addClass('iframe','embed-responsive-item');
-
-    var ads = wrapper.querySelectorAll('center');
-
-    for (var i = 0; i < ads.length; i++) {
-      if (ads[i].innerHTML.match(/www.inoreader.com\/adv\/www/)) {
-        ads[i].innerHTML = '';
-      }
-    }
-
-    return wrapper.innerHTML;
-  },
-
   render: function () {
     var self = this;
     return (
       <ul>
-        {self.props.stream.items.map(function (item, index) {
+        {self.props.items.map(function (item, index) {
           if (self.isActive(item.id)) {
             return (
             <div key={item.id} className='container'>
@@ -50,7 +25,8 @@ var Stream = React.createClass({
                     <a href={item.canonical[0].href}>{item.title}</a>
                   </h2>
                   <div dangerouslySetInnerHTML={{__html:
-                  self.addCSS(item.summary.content)}}></div>
+                    query.addCSSToFeed(query.removeAds(item.summary.content))}}>
+                  </div>
                 </div>
               </div>
             </div>);

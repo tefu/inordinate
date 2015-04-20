@@ -78,7 +78,7 @@ var MainApp = React.createClass({
           <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
         </a>
         <div id='feed'>
-          <this.state.View stream={self.state.stream} />
+          <this.state.View items={self.state.stream.items} />
         </div>
       </div>
     </div>);
