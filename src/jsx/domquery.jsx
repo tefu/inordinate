@@ -40,7 +40,10 @@ function getFirstImage (html) {
 
   var image = wrapper.querySelector('img');
 
-  image = image ? image : document.createElement('img');
+  if (!image || image.width === 0 || image.height === 0) {
+      image = document.createElement('img');
+      image.className = 'no-image';
+  }
 
   return image;
 }
@@ -48,5 +51,6 @@ function getFirstImage (html) {
 module.exports = {
   addCSSToFeed: addCSSToFeed,
   removeAds: removeAds,
-  getFirstImage: getFirstImage
+  getFirstImage: getFirstImage,
+  addClass: addClass
 };

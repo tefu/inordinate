@@ -26,7 +26,7 @@ var MainApp = React.createClass({
         iconUrl: 'https://www.inoreader.com/cache/favicons/l/o/b/lobste_rs_16x16.png'
       }],
       showSidebar: false,
-      View: Stream
+      View: Gallery
     };
   },
 

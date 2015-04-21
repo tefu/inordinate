@@ -1,4 +1,8 @@
+html {
+  height: 100%;
+}
 body {
+  height: 100%;
   background-color: #F8F7F7;
 }
 a {
@@ -81,7 +85,6 @@ h2 {
   background-color: rgba(242, 239, 240, 0.5);
 }
 
-
  /* Scrollbar ------------------------------------------------------- */
 ::-webkit-scrollbar {
   height: 5px;
@@ -95,4 +98,27 @@ h2 {
 
 ::-webkit-scrollbar-corner {
   background: #000;
+}
+
+
+/* Gallery ---------------------------------------------------------- */
+.image-post {
+  overflow: hidden;
+  width: 300px;
+  display: inline-block;
+  vertical-align: top;
+  margin-bottom: 12px;
+  border: 1px solid rgba(0,0,0,0.3);
+}
+
+.image-post:hover {
+  border: 1px solid rgba(0,0,0,0.8);
+}
+
+.inner-image {
+}
+
+.no-image {
+  width: 200px;
+  height: 200px;
 }
