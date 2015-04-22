@@ -68,8 +68,8 @@ var MainApp = React.createClass({
                                     "fa-toggle-off" : "fa-toggle-on")}
            onClick={self.toggleView}></i>
       </div>
-      <div className={ 'app-wrap ' + ((self.state.showSidebar) ? 'show-nav' : '')}>
-        <div id='sidebar-menu'>
+      <div id='wrapper' className={ ((self.state.showSidebar) ? 'toggled' : '')}>
+        <div id='sidebar-wrapper'>
           <h2>Subscriptions</h2>
           <Sidebar subscriptions={self.state.subscriptions}
                   switchFeed={self.switchFeed} />
@@ -77,7 +77,7 @@ var MainApp = React.createClass({
         <a href='#' className='toggle-nav' onClick={self.toggleSidebar}>
           <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
         </a>
-        <div id='feed'>
+        <div id='page-content-wrapper'>
           <this.state.View items={self.state.stream.items} />
         </div>
       </div>
