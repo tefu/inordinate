@@ -38,7 +38,7 @@ h2 {
 }
 
 
-#feed {
+#feed, #gallery {
   -webkit-transition: all .05s ease-in-out;
   padding: 3px 15px 0 15px;
 }
@@ -102,12 +102,14 @@ h2 {
 
 
 /* Gallery ---------------------------------------------------------- */
+
 .image-post {
   overflow: hidden;
   width: 300px;
+  min-height: 175px;
   display: inline-block;
-  vertical-align: top;
-  margin-bottom: 12px;
+  /* vertical-align: top; */
+  margin: 7px 7px 7px 7px;
   border: 1px solid rgba(0,0,0,0.3);
 }
 
