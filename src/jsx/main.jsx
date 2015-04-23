@@ -68,9 +68,8 @@ var MainApp = React.createClass({
                                     "fa-toggle-off" : "fa-toggle-on")}
            onClick={self.toggleView}></i>
       </div>
-      <div id='wrapper' className={ ((self.state.showSidebar) ? 'toggled' : '')}>
+      <div id='wrapper' className={ ((self.state.showSidebar) ? '' : 'toggled')}>
         <div id='sidebar-wrapper'>
-          <h2>Subscriptions</h2>
           <Sidebar subscriptions={self.state.subscriptions}
                   switchFeed={self.switchFeed} />
         </div>
