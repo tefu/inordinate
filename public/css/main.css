@@ -48,19 +48,26 @@ h2 {
 #gallery {
   width: 50%;
 }
-
 /* Sidebar --------------------------------------------------------- */
+
 .subscription-list {
   padding-left: 0px;
 }
 
 .subscription {
+  white-space: nowrap;
+  min-width: 0px;
   background-color: rgba(242, 239, 240, 0.8);
   position: relative;
   display: block;
   padding: 5px 5px;
   margin-bottom: -1px;
   border: 1px solid #dddddd;
+  -webkit-transition: all 0.5s ease;
+}
+
+#wrapper.toggled .subscription {
+  min-width: 3000px;
 }
 
 .active-subscription {
@@ -183,8 +190,8 @@ h2 {
     margin-right: 0;
   }
 }
-
 /* Scrollbar ------------------------------------------------------- */
+
 ::-webkit-scrollbar {
   height: 5px;
   width: 5px;
@@ -198,8 +205,8 @@ h2 {
 ::-webkit-scrollbar-corner {
   background: #000;
 }
-
 /* Gallery ---------------------------------------------------------- */
+
 .image-post {
   overflow: hidden;
   width: 200px;

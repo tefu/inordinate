@@ -1,6 +1,7 @@
 node_modules/
 .jshintrc
 public/node_modules
+public/js
 src/jsx/pass.jsx
 src/jsx/toybox.jsx
 cache/
