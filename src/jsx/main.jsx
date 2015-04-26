@@ -25,6 +25,7 @@ var MainApp = React.createClass({
         htmlUrl: 'https://lobste.rs/',
         iconUrl: 'https://www.inoreader.com/cache/favicons/l/o/b/lobste_rs_16x16.png'
       }],
+      activeSubscription: -1,
       showSidebar: false,
       View: Gallery
     };
@@ -34,11 +35,15 @@ var MainApp = React.createClass({
     this.setState({showSidebar: !(this.state.showSidebar)});
   },
 
-  switchFeed: function (id) {
+  switchFeed: function (index) {
     var self = this;
-    Api.streamContents(id).then(function (obj) {
-      self.setState({stream: obj});
-    });
+    if (0 <= index && index < self.state.subscriptions.length) {
+      var id = self.state.subscriptions[index].id;
+      Api.streamContents(id).then(function (obj) {
+        self.setState({stream: obj});
+        self.setState({activeSubscription: index});
+      });
+    }
   },
 
   login: function (username, password) {
@@ -71,7 +76,8 @@ var MainApp = React.createClass({
       <div id='wrapper' className={ ((self.state.showSidebar) ? '' : 'toggled')}>
         <div id='sidebar-wrapper'>
           <Sidebar subscriptions={self.state.subscriptions}
-                  switchFeed={self.switchFeed} />
+                   activeSubscription={self.state.activeSubscription}
+                   switchFeed={self.switchFeed} />
         </div>
         <a href='#' className='toggle-nav' onClick={self.toggleSidebar}>
           <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
