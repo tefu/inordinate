@@ -27,7 +27,8 @@ var MainApp = React.createClass({
       }],
       activeSubscription: -1,
       showSidebar: false,
-      View: Gallery
+      View: Gallery,
+      unreadCounts: {}
     };
   },
 
@@ -51,10 +52,10 @@ var MainApp = React.createClass({
   },
 
   toggleView: function () {
-      this.setState({View: (this.state.View === Stream) ? Gallery : Stream});
+    this.setState({View: (this.state.View === Stream) ? Gallery : Stream});
   },
 
-  componentDidMount: function () {
+  componentWillMount: function () {
     var self = this;
 
     self.login(pass.username, pass.password);
@@ -62,6 +63,18 @@ var MainApp = React.createClass({
     Api.subscriptionList().then(function (data) {
       self.setState({subscriptions: data.subscriptions});
     });
+
+    Api.unreadCount().then(function (data) {
+      self.setState({unreadCounts: self.makeUnreadCounts(data)});
+    });
+  },
+
+  makeUnreadCounts: function (data) {
+    var idToCounts = {};
+    data.unreadcounts.forEach(function (unread) {
+      idToCounts[unread.id] = unread.count;
+    });
+    return idToCounts;
   },
 
   render: function () {
@@ -77,7 +90,8 @@ var MainApp = React.createClass({
         <div id='sidebar-wrapper'>
           <Sidebar subscriptions={self.state.subscriptions}
                    activeSubscription={self.state.activeSubscription}
-                   switchFeed={self.switchFeed} />
+                   switchFeed={self.switchFeed}
+                   unreadCounts={self.state.unreadCounts} />
         </div>
         <a href='#' className='toggle-nav' onClick={self.toggleSidebar}>
           <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
