@@ -89,7 +89,7 @@ var MainApp = React.createClass({
 
   render: function () {
     var self = this;
-    console.log(self.getActiveSubscription());
+    var activeSub = self.getActiveSubscription();
     return (
     <div>
       <div id='wrapper' className={ ((self.state.showSidebar) ? '' : 'toggled')}>
@@ -102,7 +102,8 @@ var MainApp = React.createClass({
         <a href='#' className='toggle-nav' onClick={self.toggleSidebar}>
           <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
         </a>
-        <div id='title-bar'>{(self.getActiveSubscription().title || '.') + ''}
+        <div id='title-bar'>
+          <a href={activeSub.htmlUrl}>{(activeSub.title || '.') + ''}</a>
           <i id='toggle-view' className={"fa fa-lg " + ((self.state.View === Stream) ?
                                     "fa-toggle-off" : "fa-toggle-on")}
            onClick={self.toggleView}></i>

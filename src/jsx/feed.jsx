@@ -18,7 +18,7 @@ var Stream = React.createClass({
         {self.props.items.map(function (item, index) {
           if (self.isActive(item.id)) {
             return (
-            <div key={item.id} className='container'>
+            <div key={item.id} className='active-post container'>
               <div className='row'>
                 <div className='col-md-9'>
                   <h3 className='page-header'>

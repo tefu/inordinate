@@ -19,6 +19,10 @@ h2 {
   font-size: 2em;
 }
 
+ul {
+  padding-left: 25px;
+}
+
 #app {
   overflow: hidden;
   width: 100%;
@@ -40,15 +44,30 @@ h2 {
 }
 
 #title-bar {
+  z-index: 9;
+  position: fixed;
+  width: 100%;
+  display block;
   background: #FDFDFD;
   text-align: center;
   -webkit-box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.75);
   border: 1px solid #dddddd;
+  padding-right: 250px;
+  transition: all .5s ease;
+}
+
+#wrapper.toggled #title-bar {
+  padding-right: 0px;
 }
 
 #toggle-view {
+  transition: color .05s ease;
   padding: 4px 4px 0 0;
   float: right;
+}
+
+#toggle-view:hover {
+  color: rgba(0,0,0,0.5);
 }
 
 #feed,
@@ -62,11 +81,13 @@ h2 {
 }
 
 .inactive-post {
+  transition: all .05s ease;
   border-top: 1px solid rgba(0,0,0,0);
   border-bottom: 1px solid #dddddd;
 }
 
 .inactive-post:hover {
+  color: rgba(0,0,0,0.75);
   border-top: 1px solid #8A485A;
   border-bottom: 1px solid #8A485A;
 }
@@ -158,8 +179,12 @@ h2 {
   padding: 15px;
 }
 
+#page-content-wrapper ul {
+  padding-top: 10px;
+}
+
 .toggle-nav {
-  z-index: 8;
+  z-index: 10;
   margin-left: -30px;
   position: fixed;
   top: 15px;
@@ -180,35 +205,33 @@ h2 {
   margin-left: -30px;
 }
 
-@media(min-width:768px) {
-  #wrapper {
-    padding-left: 250px;
-  }
-  #wrapper.toggled {
-    padding-left: 0;
-  }
-  #sidebar-wrapper {
-    -webkit-box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.75);
-    width: 250px;
-  }
-  #wrapper.toggled #sidebar-wrapper {
-    -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
-    width: 0;
-  }
-  .toggle-nav {
-    margin-left: 250px;
-  }
-  #wrapper.toggled .toggle-nav {
-    margin-left: 0px;
-  }
-  #page-content-wrapper {
-    padding: 20px;
-    position: relative;
-  }
-  #wrapper.toggled #page-content-wrapper {
-    position: relative;
-    margin-right: 0;
-  }
+#wrapper {
+  padding-left: 250px;
+}
+#wrapper.toggled {
+  padding-left: 0;
+}
+#sidebar-wrapper {
+  -webkit-box-shadow: 2px 2px 3px 2px rgba(0, 0, 0, 0.75);
+  width: 250px;
+}
+#wrapper.toggled #sidebar-wrapper {
+  -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
+  width: 0;
+}
+.toggle-nav {
+  margin-left: 250px;
+}
+#wrapper.toggled .toggle-nav {
+  margin-left: 0px;
+}
+#page-content-wrapper {
+  padding: 20px;
+  position: relative;
+}
+#wrapper.toggled #page-content-wrapper {
+  position: relative;
+  margin-right: 0;
 }
 /* Scrollbar ------------------------------------------------------- */
 
