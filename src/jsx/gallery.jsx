@@ -4,16 +4,6 @@ var React = require('react'),
 
 module.exports = React.createClass({
 
-  componentDidUpdate: function () {
-    var container = document.querySelector('#gallery');
-    var msnry = new Masonry(container, {
-      msnry: new Masonry(container, {
-        columnWidth: 10,
-        itemSelector: '.image-post'
-      })
-    });
-  },
-
   render: function () {
     var self = this;
     return (

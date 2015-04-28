@@ -39,6 +39,18 @@ h2 {
   color: rgba(0, 0, 0, 0.7);
 }
 
+#title-bar {
+  background: #FDFDFD;
+  text-align: center;
+  -webkit-box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.75);
+  border: 1px solid #dddddd;
+}
+
+#toggle-view {
+  padding: 4px 4px 0 0;
+  float: right;
+}
+
 #feed,
 #gallery {
   -webkit-transition: all .05s ease-in-out;
@@ -46,10 +58,20 @@ h2 {
 }
 
 #gallery {
-  width: 50%;
+  width: 100%;
 }
-/* Sidebar --------------------------------------------------------- */
 
+.inactive-post {
+  border-top: 1px solid rgba(0,0,0,0);
+  border-bottom: 1px solid #dddddd;
+}
+
+.inactive-post:hover {
+  border-top: 1px solid #8A485A;
+  border-bottom: 1px solid #8A485A;
+}
+
+/* Sidebar --------------------------------------------------------- */
 .subscription-list {
   padding-left: 0px;
 }
@@ -118,7 +140,6 @@ h2 {
   background: rgba(64, 48, 65, 1);
   background: -webkit-gradient(left top, right top, color-stop(1%, rgba(64, 48, 65, 1)), color-stop(20%, rgba(69, 52, 70, 1)), color-stop(36%, rgba(74, 56, 75, 1)), color-stop(53%, rgba(74, 56, 75, 1)), color-stop(69%, rgba(74, 56, 75, 1)), color-stop(82%, rgba(70, 53, 71, 1)), color-stop(100%, rgba(64, 48, 65, 1)));
   background: -webkit-linear-gradient(left, rgba(64, 48, 65, 1) 1%, rgba(69, 52, 70, 1) 20%, rgba(74, 56, 75, 1) 36%, rgba(74, 56, 75, 1) 53%, rgba(74, 56, 75, 1) 69%, rgba(70, 53, 71, 1) 82%, rgba(64, 48, 65, 1) 100%);
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#403041', endColorstr='#403041', GradientType=1);
   z-index: 3;
   position: fixed;
   left: 250px;

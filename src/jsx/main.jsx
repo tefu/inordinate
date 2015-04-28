@@ -26,14 +26,24 @@ var MainApp = React.createClass({
         iconUrl: 'https://www.inoreader.com/cache/favicons/l/o/b/lobste_rs_16x16.png'
       }],
       activeSubscription: -1,
-      showSidebar: false,
-      View: Gallery,
+      showSidebar: true,
+      View: Stream,
       unreadCounts: {}
     };
   },
 
   toggleSidebar: function () {
     this.setState({showSidebar: !(this.state.showSidebar)});
+  },
+
+  getActiveSubscription: function () {
+    var active = this.state.activeSubscription;
+    var subs = this.state.subscriptions;
+    if (0 <= active && active < subs.length) {
+      return subs[active];
+    } else {
+      return {};
+    };
   },
 
   switchFeed: function (index) {
@@ -79,13 +89,9 @@ var MainApp = React.createClass({
 
   render: function () {
     var self = this;
+    console.log(self.getActiveSubscription());
     return (
     <div>
-      <div id='app-menu'>
-        <i className={"fa fa-lg " + ((self.state.View === Stream) ?
-                                    "fa-toggle-off" : "fa-toggle-on")}
-           onClick={self.toggleView}></i>
-      </div>
       <div id='wrapper' className={ ((self.state.showSidebar) ? '' : 'toggled')}>
         <div id='sidebar-wrapper'>
           <Sidebar subscriptions={self.state.subscriptions}
@@ -96,6 +102,11 @@ var MainApp = React.createClass({
         <a href='#' className='toggle-nav' onClick={self.toggleSidebar}>
           <i id='toggle-icon' className='fa fa-bars fa-lg'></i>
         </a>
+        <div id='title-bar'>{(self.getActiveSubscription().title || '.') + ''}
+          <i id='toggle-view' className={"fa fa-lg " + ((self.state.View === Stream) ?
+                                    "fa-toggle-off" : "fa-toggle-on")}
+           onClick={self.toggleView}></i>
+        </div>
         <div id='page-content-wrapper'>
           <this.state.View items={self.state.stream.items} />
         </div>

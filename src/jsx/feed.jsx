@@ -21,9 +21,9 @@ var Stream = React.createClass({
             <div key={item.id} className='container'>
               <div className='row'>
                 <div className='col-md-9'>
-                  <h2 className='page-header'>
+                  <h3 className='page-header'>
                     <a href={item.canonical[0].href}>{item.title}</a>
-                  </h2>
+                  </h3>
                   <div dangerouslySetInnerHTML={{__html:
                     query.addCSSToFeed(query.removeAds(item.summary.content))}}>
                   </div>
@@ -33,11 +33,11 @@ var Stream = React.createClass({
           }
           else {
             return (
-              <li className="inactive-post"
+              <div className="inactive-post"
                   key={item.id}
                   onClick={function () {
                     self.setState({activeId: item.id});
-                  }}>{item.title}</li>
+                  }}>{item.title}</div>
             );
           }
         })}
