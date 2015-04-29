@@ -1,6 +1,5 @@
 var React = require('react'),
-    query = require('./domquery'),
-    ImagesLoaded = require('imagesloaded');
+    query = require('./domquery');
 
 module.exports = React.createClass({
 
@@ -13,16 +12,19 @@ module.exports = React.createClass({
                   query.removeAds(item.summary.content));
         img.className = 'inner-image img-responsive';
         return (
-        <div className='image-post'>
-          <div>{item.title}</div>
-          <div className='gallery-item'
-                  key={item.id}
-                  onClick={function () {
-                    self.setState({activeId: item.id});
-                  }}>
-            <img src={img.src} className='inner-image img-responsive'/>
+        <a href={item.canonical[0].href}>
+          <div className='image-post'>
+            <div>{item.title}</div>
+              <div className='gallery-item'
+                      key={item.id}
+                      onClick={function () {
+                        self.setState({activeId: item.id});
+                      }}>
+                <img src={img.src} className='inner-image img-responsive'/>
+              </div>
           </div>
-        </div>);
+        </a>
+        );
       })}
     </div>);
   }
